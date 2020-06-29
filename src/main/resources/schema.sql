@@ -46,14 +46,14 @@ CREATE TABLE `manager` (
     PRIMARY KEY (`id`)
 );
 
-ALTER TABLE `student` ADD CONSTRAINT `FK_class`
+/*ALTER TABLE `student` ADD CONSTRAINT `FK_class`
     FOREIGN KEY (`class_id`) REFERENCES `class` (`id`);
 ALTER TABLE `course` ADD CONSTRAINT `FK_teacher`
     FOREIGN KEY (`teacher_id`) REFERENCES `teacher` (`id`);
 ALTER TABLE `grade` ADD CONSTRAINT `FK_student`
     FOREIGN KEY (`student_id`) REFERENCES `student` (`id`);
 ALTER TABLE `grade` ADD CONSTRAINT `FK_course`
-    FOREIGN KEY (`course_id`) REFERENCES `course` (`id`);
+    FOREIGN KEY (`course_id`) REFERENCES `course` (`id`);*/
 
 
 DROP TABLE IF EXISTS `user`;

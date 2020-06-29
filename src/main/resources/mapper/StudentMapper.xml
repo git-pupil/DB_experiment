@@ -12,12 +12,13 @@
         <result column="college" property="college"/>
         <result column="major" property="major"/>
     </resultMap>
+
     <select id="findAllInfo" resultMap="studentInfo">
         select s.id, s.name, s.sex, s.email, s.class_id, c.college, c.major
         from student s
         join class c on s.class_id = c.id
     </select>
-    <select id="findAll" resultMap="student">
+    <select id="findAll" resultType="database.part.db2.entity.Student">
         select *
         from student
     </select>
