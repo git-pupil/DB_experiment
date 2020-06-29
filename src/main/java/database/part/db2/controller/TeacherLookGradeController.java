@@ -22,13 +22,14 @@ public class TeacherLookGradeController {
     @Autowired
     TeacherService service;
         //获取相关权限
-    Authentication au = SecurityContextHolder.getContext().getAuthentication();
-
-    Teacher t_info = service.getInfo(au);
-    String username = t_info.getName();
 
     @GetMapping("/teacherLookGrade")
     String teacherLookGrade(Model model, HttpServletRequest request, Long courseId){
+        Authentication au = SecurityContextHolder.getContext().getAuthentication();
+
+        Teacher t_info = service.getInfo(au);
+        String username = t_info.getName();
+
 
         model.addAttribute("username", username);
         Course course = service.findCourse(courseId);

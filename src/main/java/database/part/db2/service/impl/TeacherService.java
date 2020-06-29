@@ -71,9 +71,9 @@ public class TeacherService implements ITeacherService {
 
     @Override
     public Teacher getInfo(Authentication authentication) {
-        Long userId = Long.valueOf(authentication.getName());//获取当前登录用户的Id
-        Teacher currentTeacher= teacherMapper.findById(userId);
-        return currentTeacher;
+        //获取当前登录用户的Id
+        Long userId = Long.valueOf(authentication.getName());
+        return teacherMapper.findById(userId);
     }
 
     @Override

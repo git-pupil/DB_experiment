@@ -21,14 +21,14 @@ import java.util.List;
 public class TeacherCourseController {
     @Autowired
     TeacherService service;
-    //获取相关权限
-    Authentication au = SecurityContextHolder.getContext().getAuthentication();
 
-    Teacher t_info = service.getInfo(au);
-    String username = t_info.getName();
 
     @RequestMapping("/teacherCourse")
     String teacherCourse(Model model, HttpServletRequest request) {
+        //获取相关权限
+        Authentication au = SecurityContextHolder.getContext().getAuthentication();
+
+        Teacher t_info = service.getInfo(au);
         //上传相关信息
         String username = t_info.getName();
         HttpSession session = request.getSession();
@@ -46,6 +46,11 @@ public class TeacherCourseController {
 
     @RequestMapping("/teacherLookCharm")
     String teacherLookCharm(Model model, HttpServletRequest request, Long courseId){
+        //获取相关权限
+        Authentication au = SecurityContextHolder.getContext().getAuthentication();
+
+        Teacher t_info = service.getInfo(au);
+        String username = t_info.getName();
         //上传相关信息
         model.addAttribute("username", username);
         Course course = service.findCourse(courseId);
@@ -69,6 +74,11 @@ public class TeacherCourseController {
     }
     @RequestMapping("/teacherLookCharm1")
     String teacherLookCharm1(Model model, HttpServletRequest request, Long courseId){
+        //获取相关权限
+        Authentication au = SecurityContextHolder.getContext().getAuthentication();
+
+        Teacher t_info = service.getInfo(au);
+        String username = t_info.getName();
 
         model.addAttribute("username", username);
         Course course = service.findCourse(courseId);

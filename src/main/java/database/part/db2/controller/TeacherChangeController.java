@@ -7,6 +7,7 @@ import database.part.db2.entity.Student;
 import database.part.db2.entity.Teacher;
 import database.part.db2.mapper.GradeMapper;
 import database.part.db2.mapper.StudentMapper;
+import database.part.db2.mapper.TeacherMapper;
 import database.part.db2.service.ITeacherService;
 import database.part.db2.service.impl.TeacherService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,15 +28,16 @@ public class TeacherChangeController {
     @Autowired
     StudentMapper studentMapper;
     @Autowired
+    TeacherMapper teacherMapper;
+    @Autowired
     TeacherService service;
-    //获取权限信息
-    Authentication au = SecurityContextHolder.getContext().getAuthentication();
 
-    Teacher t_info = service.getInfo(au);
 
     @RequestMapping("/teacherChangeGrade")
     String teacherChangeGrade(Model model,HttpServletRequest request, Long studentId, Long courseId){
-
+        //获取权限信息
+        Authentication au = SecurityContextHolder.getContext().getAuthentication();
+        Teacher t_info = service.getInfo(au);
         HttpSession session = request.getSession();
         //上传相关信息
         String username = t_info.getName();

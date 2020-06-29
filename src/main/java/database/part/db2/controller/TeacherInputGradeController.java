@@ -27,15 +27,16 @@ public class TeacherInputGradeController {
     GradeMapper gradeMapper;
     @Autowired
     TeacherService service;
-    //获取相关权限
-    Authentication au = SecurityContextHolder.getContext().getAuthentication();
 
-    Teacher t_info = service.getInfo(au);
-    String username = t_info.getName();
 
     @PostMapping("/teacherInputGrade")
     String teacherInputGrade(Model model, HttpServletRequest request, Long courseId,
                              @RequestParam(value = "ids[]") ArrayList<Long> ids, @RequestParam(value = "points[]") ArrayList<Integer> points){
+        //获取相关权限
+        Authentication au = SecurityContextHolder.getContext().getAuthentication();
+
+        Teacher t_info = service.getInfo(au);
+        String username = t_info.getName();
         //录入成绩数
         int cnt = ids.size();
         //上传相关信息
