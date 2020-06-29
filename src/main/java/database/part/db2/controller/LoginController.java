@@ -45,14 +45,17 @@ public class LoginController {
         String Role = user.getRole();
         if (Role.equals("STUDENT")){
             StudentInfo studentInfo = studentMapper.findInfoById(userId);
+            request.setAttribute("username", studentInfo.getName());
             request.setAttribute("student", studentInfo);
             return "studentHome";
         }else if (Role.equals("TEACHER")){
             Teacher teacher = teacherMapper.findById(userId);
+            request.setAttribute("username", teacher.getName());
             request.setAttribute("teacher", teacher);
             return "teacherHome";
         }else{
             Manager manager = managerMapper.findById(userId);
+            request.setAttribute("username", manager.getName());
             request.setAttribute("manager", manager);
             return "managerHome";
         }
