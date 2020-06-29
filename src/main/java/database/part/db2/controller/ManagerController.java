@@ -105,7 +105,7 @@ public class ManagerController {
         return "managerStudent";
     }
 
-    @DeleteMapping("/managerStudent/managerDeleteStudent(student=${student.getId()})")
+    @DeleteMapping("/managerStudent/managerDeleteStudent")
     public String deleteStudent(HttpServletRequest request) {
         HttpSession session = request.getSession();
         Student student = (Student)session.getAttribute("student");
