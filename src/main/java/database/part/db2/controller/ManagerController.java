@@ -16,6 +16,7 @@ import database.part.db2.mapper.StudentMapper;
 import database.part.db2.mapper.TeacherMapper;
 import database.part.db2.mapper.auth.UserMapper;
 import database.part.db2.service.IManagerService;
+import database.part.db2.service.impl.ManagerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -33,7 +34,7 @@ import java.util.List;
 public class ManagerController {
 
     @Autowired
-    IManagerService service;
+    ManagerService service;
     Authentication au = SecurityContextHolder.getContext().getAuthentication();
     List<String> collegeList = Arrays.asList("信息与通信工程学院","电子工程学院",
             "计算机学院","网络空间安全学院","人工智能学院","软件学院","自动化学院",

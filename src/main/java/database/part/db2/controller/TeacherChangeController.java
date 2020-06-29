@@ -27,7 +27,7 @@ public class TeacherChangeController {
     @Autowired
     StudentMapper studentMapper;
     @Autowired
-    ITeacherService service;
+    TeacherService service;
     //获取权限信息
     Authentication au = SecurityContextHolder.getContext().getAuthentication();
 

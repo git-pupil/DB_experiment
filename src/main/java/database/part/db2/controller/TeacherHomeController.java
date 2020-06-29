@@ -17,7 +17,7 @@ import javax.servlet.http.HttpSession;
 @Controller
 public class TeacherHomeController {
         @Autowired
-        ITeacherService service;
+        TeacherService service;
         //获取相关权限
         Authentication au = SecurityContextHolder.getContext().getAuthentication();
 

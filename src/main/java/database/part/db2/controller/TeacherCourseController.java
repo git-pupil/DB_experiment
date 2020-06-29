@@ -20,7 +20,7 @@ import java.util.List;
 @Controller
 public class TeacherCourseController {
     @Autowired
-    ITeacherService service;
+    TeacherService service;
     //获取相关权限
     Authentication au = SecurityContextHolder.getContext().getAuthentication();
 

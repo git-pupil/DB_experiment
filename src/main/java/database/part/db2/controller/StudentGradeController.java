@@ -5,6 +5,7 @@ import database.part.db2.mapper.StudentMapper;
 import database.part.db2.mapper.TeacherMapper;
 import database.part.db2.mapper.auth.UserMapper;
 import database.part.db2.service.IStudentService;
+import database.part.db2.service.impl.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -21,7 +22,7 @@ import java.util.List;
 public class StudentGradeController {
 
     @Autowired
-    IStudentService service;
+    StudentService service;
 
 
     @GetMapping("/studentGrade")

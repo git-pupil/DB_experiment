@@ -26,7 +26,7 @@ public class TeacherInputGradeController {
     @Autowired
     GradeMapper gradeMapper;
     @Autowired
-    ITeacherService service;
+    TeacherService service;
     //获取相关权限
     Authentication au = SecurityContextHolder.getContext().getAuthentication();
 

@@ -19,7 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 public class StudentController {
 
     @Autowired
-    IStudentService service;
+    StudentService service;
 
 
     @GetMapping ("/studentHome")

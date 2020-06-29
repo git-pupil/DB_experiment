@@ -23,7 +23,7 @@ public class TeacherAddStudentController {
     GradeMapper gradeMapper;
 
     @Autowired
-    ITeacherService service;
+    TeacherService service;
     //获取权限
     Authentication au = SecurityContextHolder.getContext().getAuthentication();
     Teacher t_info = service.getInfo(au);
