@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="database.part.db2.mapper.TeacherMapper">
+
+    <select id="findAll" resultType="database.part.db2.entity.Teacher">
+        select * from teacher
+    </select>
+    <select id="findById" resultType="database.part.db2.entity.Teacher">
+        select * from teacher where id = #{id}
+    </select>
+
+    <insert id="create" keyProperty="id">
+        insert into teacher(id,name,sex,email,college) values (#{id},#{name},#{sex},#{email},#{college})
+    </insert>
+
+    <update id="update">
+        update teacher set name=#{name}, sex=#{sex}, email=#{email}, collge=#{college} where id=#{id}
+    </update>
+
+    <delete id="deleteById">
+        delete from teacher where id=#{id}
+    </delete>
+
+    <select id="findByCollege">
+        select * from teacher where college = #{college}
+    </select>
+
+</mapper>

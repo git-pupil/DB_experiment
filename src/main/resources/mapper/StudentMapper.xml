@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="database.part.db2.mapper.StudentMapper">
+
+    <resultMap id="studentInfo" type="database.part.db2.dto.StudentInfo">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="sex" property="sex"/>
+        <result column="email" property="email"/>
+        <result column="class_id" property="classId"/>
+        <result column="college" property="college"/>
+        <result column="major" property="major"/>
+    </resultMap>
+    <select id="findAllInfo" resultMap="studentInfo">
+        select s.id, s.name, s.sex, s.email, s.class_id, c.college, c.major
+        from student s
+        join class c on s.class_id = c.id
+    </select>
+    <select id="findAll" resultMap="student">
+        select *
+        from student
+    </select>
+    <select id="findInfoById" resultMap="studentInfo">
+        select s.id, s.name, s.sex, s.email, s.class_id, c.college, c.major
+        from student s
+        join class c on s.class_id = c.id
+        where s.id=#{id}
+    </select>
+
+    <select id="findById" resultType="database.part.db2.entity.Student">
+        select s.id, s.name, s.sex, s.email, c.college, c.major
+        from student s
+        join class c on s.class_id = c.id
+        where s.id=#{id}
+    </select>
+
+    <insert id="create" keyProperty="id">
+        insert into student(id,name,sex,email,class_id) values (#{id},#{name},#{sex},#{email},#{classId})
+    </insert>
+
+    <update id="update">
+        update student set name=#{name}, sex=#{sex}, email=#{email}, class_id=#{classId} where id=#{id}
+    </update>
+
+    <delete id="deleteById">
+        delete from student where id=#{id}
+    </delete>
+
+    <resultMap id="studentWithGrade" type="database.part.db2.dto.StudentWithGrade">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="point" property="point"/>
+    </resultMap>
+    <select id="findGradeById" resultMap="studentWithGrade">
+        select s.id, s.name, g.point
+        from student s,grade g
+        where g.course_id = #{id} and s.id = g.student_id
+    </select>
+
+
+    <select id="findInfo" resultMap="studentInfo">
+        select s.id, s.name, s.sex, s.email, s.class_id, c.college, c.major
+        from student s
+        join class c on s.class_id = c.id
+    </select>
+    <select id="findInfoByCollege" resultMap="studentInfo">
+        select s.id, s.name, s.sex, s.email, s.class_id, c.college, c.major
+        from student s
+        join class c on s.class_id = c.id
+        where c.college=#{college}
+    </select>
+
+</mapper>

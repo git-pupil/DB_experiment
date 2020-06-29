@@ -1,0 +1,211 @@
+<!DOCTYPE>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>学生成绩分布饼状图</title>
+
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script type="text/javascript">
+        var totalData=[{name:"0-40",num:"${num1}"},{name:"40-60",num:"${num2}"},{name:"60-70",num:"${num3}"},
+            {name:"70-80",num:"${num4}"},{name:"80-90",num:"${num5}"},{name:"90-100",num:"${num6}"}];
+        var sum = 0;
+        var lastsum=0;
+        var cWidth, cHeight, cMargin, cSpace;
+        var cMarginSpace, cMarginHeight;
+        var bWidth, bMargin, totalBars, maxDataValue;
+        var ctr, numctr, speed;
+        var totLabelsOnYAxis;
+
+        window.onload = function(){
+            var cvs_pie = document.getElementById("cav_pie");
+            if(cvs_pie==null)return;
+            cvs_pie.height = 300;
+            cvs_pie.width = 300;
+            var ctx_pie = cvs_pie.getContext("2d");
+            sumData();
+            drawChart(ctx_pie);
+        };
+
+        //求数据总和
+        function sumData(){
+            for(var i=0;i<totalData.length;i++){
+                sum+=totalData[i].num;
+            }
+        }
+        //下一个起始
+        function lastSum(i){
+            lastsum=0;//重置为0
+            for (var j = 0; j < i; j++) {
+                lastsum+=totalData[j].num;
+            }
+        }
+        //画饼图
+        //半径
+        var radius=150;
+        function drawChart(ctx_pie){
+            for (var i = 0; i < 6;i++) {
+                lastSum(i);//上一个结束弧度就是下一个起始弧度
+                var startAngle= (Math.PI*2)*(lastsum/sum);//起始弧度
+                lastSum(i+1);
+                var endAngle=(Math.PI*2)*(lastsum/sum);//结束弧度
+                ctx_pie.save();
+                ctx_pie.fillStyle=this.colors[i];
+                ctx_pie.beginPath();
+                ctx_pie.moveTo(150,150);
+                ctx_pie.arc(150,150,radius,startAngle,endAngle,false);
+                ctx_pie.closePath();
+                ctx_pie.fill();
+                ctx_pie.restore();
+                drawText(startAngle,endAngle,totalData[i].name,(100 * totalData[i].num)/sum,ctx_pie);
+            }
+        }
+        function drawText(s,e,jn,jsm,ctx_pie){
+            var x = Math.cos((s+e)/2)*(radius / 2)+150;
+            var y = Math.sin((s+e)/2)*(radius / 2)+150;
+            ctx_pie.fillStyle="blue";
+            ctx_pie.fillText(jn,x,y);
+            ctx_pie.fillStyle="black";
+            ctx_pie.fillText(jsm.toFixed(2)+"%",x,y+20);
+        }
+        function barChart(arrVisitors,canvas,context) {
+            chartSettings(arrVisitors,context,canvas);
+
+            drawAxisLabelMarkers(arrVisitors,context);
+
+            for(;ctr < numctr;ctr ++){
+                setTimeout(drawChartWithAnimation(arrVisitors,context),speed);
+            }
+
+        }
+        function chartSettings(arrVisitors,context,canvas) {
+            cMargin = 25;//两个元素之间间距，与窗口的距离====坐标y轴顶点位置====
+            cSpace = 60;//两个对象之间的距离
+            cHeight = canvas.height - 2 * cMargin - cSpace;//坐标总高度
+            cWidth = canvas.width - 2 * cMargin - cSpace;//坐标总长
+            cMarginSpace = cMargin + cSpace;//起始x
+            cMarginHeight = cMargin + cHeight;//起始y
+            // bar properties   10px Arial
+            bMargin = 15;//两根柱子之间的距离
+            totalBars = arrVisitors.length;//柱子根数
+            bWidth = (cWidth / totalBars) - bMargin;//柱子宽度
+            // find maximum value to plot on chart
+            maxDataValue = 0;
+            for (var i = 0; i < totalBars; i++) {
+                var barVal = parseInt(arrVisitors[i].num);
+                if (parseInt(barVal) > parseInt(maxDataValue))
+                    maxDataValue = barVal;
+            }
+            totLabelsOnYAxis = 10;
+            context.font = "10px Garamond";
+
+            ctr = 0;
+            numctr = 100;
+            speed = 10;
+        }
+        // draw chart axis, labels and markers
+        function drawAxisLabelMarkers(arrVisitors, context) {
+
+            context.lineWidth = "2.0";//双轴线宽
+            // draw y axis
+            drawAxis(cMarginSpace, cMarginHeight, cMarginSpace, cMargin,context);
+            // draw x axis
+            drawAxis(cMarginSpace, cMarginHeight, cMarginSpace + cWidth + 10, cMarginHeight,context);
+            context.lineWidth = "1.0";
+            drawMarkers(arrVisitors,context);
+        }
+        // draw X and Y axis
+        function drawAxis(x, y, X, Y,context) {
+            context.beginPath();
+            context.moveTo(x, y);
+            context.lineTo(X, Y);
+            context.closePath();
+            context.stroke();
+        }
+        // draw chart markers on X and Y Axis
+        function drawMarkers(arrVisitors,context) {
+            var numMarkers = parseInt(maxDataValue / totLabelsOnYAxis);//计算y轴每一单元格数值
+            context.textAlign = "right";
+            context.fillStyle = "#000";
+            // Y Axis
+            var markerVal = 0;
+            for (var i = 0; i <= totLabelsOnYAxis; i++) {
+                markerVal = i * numMarkers;
+                markerValHt = i * numMarkers * cHeight;
+                var xMarkers = cMarginSpace - 5;
+                var yMarkers = cMarginHeight - (markerValHt / maxDataValue);
+                context.fillText(markerVal, xMarkers, yMarkers, cSpace);
+            }
+            // X Axis
+            //设置字体：context.font = "15px Arial";
+            context.textAlign = 'center';
+            for (var i = 0; i < totalBars; i++) {
+                markerXPos = cMarginSpace + bMargin + (i * (bWidth + bMargin)) + (bWidth/2);
+                markerYPos = cMarginHeight + 15;
+                context.fillText(arrVisitors[i].name, markerXPos, markerYPos, bWidth);
+            }
+            context.save();
+            // Add Y Axis title
+            context.textAlign = 'right';
+            context.font = "20px Arial";
+            context.translate( cMarginSpace, cMargin+10);//y轴标题的区域起始点cMargin + 10, cHeight / 2
+            // context.rotate(Math.PI * -90 / 180);//y轴标题旋转
+            context.fillText('人数', 0, 0);
+            context.restore();
+        }
+        function drawChartWithAnimation(arrVisitors,context) {
+
+            for (var i = 0; i < totalBars; i++) {
+                var bHt = (arrVisitors[i].num * cHeight / maxDataValue) / numctr * ctr;
+                console.log(bHt,arrVisitors[i].num,cHeight,maxDataValue,numctr,ctr);
+                var bX = cMarginSpace + (i * (bWidth + bMargin)) + bMargin;
+                var bY = cMarginHeight - bHt - 2;
+                drawRectangle(bX, bY, bWidth, bHt, true,context);
+            }
+        }
+        function drawRectangle(x, y, w, h, fill,context) {
+            context.beginPath();
+            context.rect(x, y, w, h);
+            context.closePath();
+            context.stroke();
+            if (fill) {
+                var gradient = context.createLinearGradient(0, 0, 0, 300);
+                gradient.addColorStop(0, 'green');
+                gradient.addColorStop(1, 'rgba(67,203,36,.15)');
+                context.fillStyle = gradient;
+                context.strokeStyle = gradient;
+                context.fill();
+            }
+        }
+    </script>
+    <noscript>
+        This chart is unavailable because JavaScript is disabled on your computer. Please enable
+        JavaScript and refresh this page to see the chart in action.
+    </noscript>
+</head>
+<body>
+<nav class="navbar navbar-default" role="navigation" style="background-color: #ffd9d9">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand">成绩管理系统——教师端</a>
+        </div>
+        <div>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a th:text="${username}"><span class="glyphicon glyphicon-user"></span>
+                    2017211412</a></li>
+                <li ><a href="teacherHome.html" th:href="@{/teacherHome}">
+                    <span class="glyphicon glyphicon-search"></span>
+                    我的信息</a></li>
+                <li ><a href="login.html" th:href="@{/logout}">
+                    <span class="glyphicon glyphicon-log-out"></span>
+                    退出登录</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<a type="button" class="btn btn-info" href="teacherCourse.html" th:href="@{/teacherCourse}">返回</a>
+<div style="text-align: center">
+    <canvas id="cav_pie" height="400" width="600">Your browser does not support HTML5 Canvas</canvas>
+</div>
+</body></html>

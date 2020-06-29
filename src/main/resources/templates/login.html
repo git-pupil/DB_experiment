@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>成绩管理系统</title>
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+
+    <style>
+        .banner-sec{
+            background:url(https://static.pexels.com/photos/33972/pexels-photo.jpg)  no-repeat left bottom;
+            background-size:cover;
+            min-height:500px;
+            border-radius: 0 10px 10px 0;
+            padding:0;
+        }
+
+        .container{
+            background:#fff;
+            border-radius: 10px;
+            /*box-shadow:15px 20px 0px*/
+        rgba(0,0,0,0.1);
+            width:50%;
+        }
+
+
+        .carousel-inner{
+            border-radius:0 10px 10px 0;
+        }
+        .carousel-caption{
+            text-align: left;
+            left:5%;}
+
+        .login-sec{padding: 50px 30px; position:relative;}
+
+        .login-sec .copy-text{
+            position:absolute;
+            width:80%;
+            bottom:20px;
+            font-size:13px;
+            text-align:center;
+        }
+        .login-sec .copy-text i{color:#FEB58A;}
+        .login-sec .copy-text a{color:#E36262; }
+        .login-sec h2{margin-bottom:30px; font-weight:800; font-size:30px; color: #DE6262;}
+        .login-sec h2:after{
+            content:" ";
+            width:100px;
+            height:5px;
+            background:#FEB58A;
+            display:block;
+            margin-top:20px;
+            border-radius:3px;
+            margin-left:auto;
+            margin-right:auto}
+
+
+        .btn-login{
+            background: #DE6262;
+            color:#fff;
+            font-weight:600;
+        }
+
+        #a{
+            width:1500px;
+            margin-left: 50px;
+            margin-right: 200px;
+        }
+        #logbtn{
+            margin-right: 330px;
+        }
+
+
+    </style>
+</head>
+
+
+
+<body>
+<section class="login-block">
+    <div class="container">
+        <div id="a">
+            <div class="row">
+                <div class="col-md-4 login-sec">
+                    <h2 class="text-center">请先登录</h2>
+                    <form th:action="login" th:method="post" class="login-form">
+                        <div class="form-group">
+                            <br>
+                            <input type="hidden" value="" name="id">
+                            <label class="text-uppercase">用户名</label>
+                            <input type="text" name="username" class="form-control" placeholder="" required>
+                            <p style="color: red" th:text="${ErrorMsg1}" th:if="${ErrorMsg1} != null"></p>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="text-uppercase">密码</label>
+                            <input type="password" name="password"class="form-control" placeholder="" required>
+                            <p style="color: red" th:text="${ErrorMsg2}" th:if="${ErrorMsg2} != null"></p>
+                        </div>
+
+                        <div class="form-check">
+                            <button id="logbtn" type="submit" class="btn btn-login">登录</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+</body>
+</html>
+
+
+<!--
+<body  class="right" style="height:100px ;text-align: center" >
+
+<div class="container" style="margin-top: 140px" >
+
+    <div id="loginbox" class="mainbox col-md-6 col-md-offset-3 col-sm-6 col-sm-offset-3">
+        <div class="panel panel-default" >
+            <div class="panel-heading">
+                <div class="panel-title text-center">知乎</div>
+            </div>
+            <div class="panel-body" >
+                <form  action="login" method="post" >
+                    <hr>
+                    <h3 style="text-align:center ">请输入用户名和密码</h3>
+                    <input type="hidden" value="" name="id">
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                        <input  name="username"  type="text" class="form-control"  value="" placeholder="用户名" required>
+                    </div>
+                    <p style="color: red" th:text="${ErrorMsg1}" th:if="${ErrorMsg1} != null"></p>
+                    <hr>
+
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+                        <input  name="pwd" type="password" class="form-control" value="" placeholder="密码" required>
+                    </div>
+                    <p style="color: red" th:text="${ErrorMsg2}" th:if="${ErrorMsg2} != null"></p>
+                    <hr>
+
+                    <button type="submit" class="btn btn-success" >登录</button>
+                    <a  type="button" class="btn btn-success"  href="registerUser" th:href="@{/registerUser}">用户注册</a>
+                </form><br>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
+
+-->
+
+

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>修改课程</title>
+
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+<nav class="navbar navbar-default" role="navigation" style="background-color: #ffd9d9">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand">成绩管理系统——教师端</a>
+        </div>
+        <div>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a th:text="${session.manager.getId()}"><span class="glyphicon glyphicon-user"></span>
+                    2017211412</a></li>
+                <li ><a href="managerCourse.html" th:href="@{/managerCourse}">
+                    <span class="glyphicon glyphicon-search"></span>
+                    管理课程</a></li>
+                <li ><a href="managerStudent.html" th:href="@{/managerStudent}">
+                    <span class="glyphicon glyphicon-search"></span>
+                    管理学生</a></li>
+                <li ><a href="managerTeacher.html" th:href="@{/managerTeacher}">
+                    <span class="glyphicon glyphicon-search"></span>
+                    管理教师</a></li>
+                <li ><a href="logout" th:href="@{/logout}">
+                    <span class="glyphicon glyphicon-log-out"></span>
+                    退出登录</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+
+<div class="all">
+    <div class="wrapper"><!--wrapper 将页面上的元素都包裹其中-->
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+                <h1>管理课程</h1>
+                <hr>
+                <div style="width: 800px;float: left">
+                    <br>
+                    <form action="managerCourse.html" th:action="managerChangeCourse" method="get" th:method="post">
+                    <table class="table table-hover">
+                        <tbody>
+                        <tr>
+                            <td class="text-center">课程号</td>
+                            <td class="text-center" th:text="course.getId()">12345</td>
+                            <td class="text-center">
+                                <label>
+                                    <input type="text" name="newId" class="form-control" placeholder="" required>
+                                </label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="text-center">课程名</td>
+                            <td class="text-center" th:text="course.getName()">数据库</td>
+                            <td class="text-center">
+                                <label>
+                                    <input type="text" name="newName" class="form-control" placeholder="" required>
+                                </label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="text-center">授课教师</td>
+                            <td class="text-center" th:text="course.getTeacherId()">郭雨心</td>
+                            <td class="text-center">
+                                <label>
+                                    <input type="text" name="newTeacher" class="form-control" placeholder="" required>
+                                </label>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                        <p style="text-align: right">
+                        <button type="submit" class="btn btn-info">修改</button>
+                        </p>
+                    </form>
+                </div>
+                <br>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
