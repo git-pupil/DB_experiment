@@ -16,13 +16,13 @@
         // arrVisitors[3] = "70-80, 700";
         // arrVisitors[4] = "80-90, 800";
         // arrVisitors[5] = "90-100, 975";
-        arrVisitors[0] = "0-40, ${num1}";
-        arrVisitors[1] = "40-60, ${num2}";
-        arrVisitors[2] = "60-70, ${num3}";
-        arrVisitors[3] = "70-80, ${num4}";
-        arrVisitors[4] = "80-90, ${num5}";
-        arrVisitors[5] = "90-100, ${num6}";
-        var canvas;
+        arrVisitors[0] = "0-40, [[${num1}]]";
+        arrVisitors[1] = "40-60, [[${num2}]]";
+        arrVisitors[2] = "60-70, [[${num3}]]";
+        arrVisitors[3] = "70-80, [[${num4}]]";
+        arrVisitors[4] = "80-90, [[${num5}]]";
+        arrVisitors[5] = "90-100, [[${num6}]]";
+        // var canvas;
         var context;
         // chart properties
         var cWidth, cHeight, cMargin, cSpace;
@@ -108,7 +108,7 @@
             context.textAlign = 'center';
             for (var i = 0; i < totalBars; i++) {
                 arrval = arrVisitors[i].split(",");
-                name = arrval[0];
+               // name = arrval[0];
                 markerXPos = cMarginSpace + bMargin
                     + (i * (bWidth + bMargin)) + (bWidth/2);
                 markerYPos = cMarginHeight + 10;

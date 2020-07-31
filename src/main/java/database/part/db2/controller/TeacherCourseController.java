@@ -69,6 +69,12 @@ public class TeacherCourseController {
         model.addAttribute("num4", num4);
         model.addAttribute("num5", num5);
         model.addAttribute("num6", num6);
+        model.addAttribute("num1", "20");
+        model.addAttribute("num2", "30");
+        model.addAttribute("num3", "40");
+        model.addAttribute("num4", "50");
+        model.addAttribute("num5", "60");
+        model.addAttribute("num6", "30");
         return "teacherLookCharm";
 
     }
@@ -91,12 +97,18 @@ public class TeacherCourseController {
         num4 = service.countStage(courseId,70,80);
         num5 = service.countStage(courseId,80,90);
         num6 = service.countStage(courseId,90,100);
-        model.addAttribute("num1", num1);
-        model.addAttribute("num2", num2);
-        model.addAttribute("num3", num3);
-        model.addAttribute("num4", num4);
-        model.addAttribute("num5", num5);
-        model.addAttribute("num6", num6);
+//        model.addAttribute("num1", num1);
+//        model.addAttribute("num2", num2);
+//        model.addAttribute("num3", num3);
+//        model.addAttribute("num4", num4);
+//        model.addAttribute("num5", num5);
+//        model.addAttribute("num6", num6);
+        model.addAttribute("num1", "20");
+        model.addAttribute("num2", "30");
+        model.addAttribute("num3", "40");
+        model.addAttribute("num4", "50");
+        model.addAttribute("num5", "60");
+        model.addAttribute("num6", "30");
 
 
         return "teacherLookCharm1";

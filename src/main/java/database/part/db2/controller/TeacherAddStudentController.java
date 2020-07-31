@@ -28,7 +28,7 @@ public class TeacherAddStudentController {
     Authentication au = SecurityContextHolder.getContext().getAuthentication();
     Teacher t_info = service.getInfo(au);
 
-    @RequestMapping("/teacherChangeGrade")
+    @RequestMapping("/teacherAddStudent")
     String teacherChangeGrade(Model model,HttpServletRequest request, Long studentId, Long courseId){
         HttpSession session = request.getSession();
         //上传相关信息
@@ -48,6 +48,6 @@ public class TeacherAddStudentController {
         //新增
         gradeMapper.create(grade);
 
-        return "teacherLookGrade";
+        return "teacherAddStudent";
     }
 }
