@@ -36,9 +36,13 @@ public class LoginController {
     public String login(){
         return "login";
     }
+    @GetMapping("/myLogout")
+    public String logout(){
+        return "login";
+    }
     @RequestMapping("/loginSuccess")
-    public String success(HttpServletRequest request){
-        request.setAttribute("logfailure", "0");
+    public String loginSuccess(HttpServletRequest request){
+        //request.setAttribute("logfailure", "0");
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();
         Long userId = Long.valueOf(username);
@@ -61,9 +65,13 @@ public class LoginController {
             return "managerHome";
         }
     }
+    @RequestMapping("logoutSuccess")
+    public String logoutSuccess(){
+        return "login";
+    }
     @RequestMapping("/loginFailure")
     public String failure(HttpServletRequest request){
-        request.setAttribute("logfailure", "1");
+        //request.setAttribute("logfailure", "1");
         return "login";
     }
 }
