@@ -265,7 +265,7 @@ public class ManagerController {
         return "managerCourse";
     }
 
-    @GetMapping("/managerBeginInputTeacher")
+    @GetMapping("/managerBeginInputCourse")
     public String beginInputCourse(){
         return "managerInputCourse";
     }
@@ -286,7 +286,7 @@ public class ManagerController {
         return "managerCourse";
     }
 
-    @GetMapping("/managerDeleteStudent")
+    @GetMapping("/managerDeleteCourse")
     public String deleteCourse(Model model, @RequestParam Long id) {
         service.deleteCourse(id);
         model.addAttribute("collegeList", collegeList);
