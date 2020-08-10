@@ -38,6 +38,7 @@ public class LoginController {
     }
     @RequestMapping("/loginSuccess")
     public String success(HttpServletRequest request){
+        request.setAttribute("logfailure", "0");
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();
         Long userId = Long.valueOf(username);
@@ -61,7 +62,8 @@ public class LoginController {
         }
     }
     @RequestMapping("/loginFailure")
-    public String failure(){
-        return "failure";
+    public String failure(HttpServletRequest request){
+        request.setAttribute("logfailure", "1");
+        return "login";
     }
 }

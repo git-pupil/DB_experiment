@@ -19,15 +19,15 @@
         </div>
         <div>
             <ul class="nav navbar-nav navbar-right">
-                <li><a th:text="${session.manager.getId()}" th:href="@{/managerHome}"><span class="glyphicon glyphicon-user"></span>
+                <li><a th:text="${username}"><span class="glyphicon glyphicon-user"></span>
                     2017211412</a></li>
-                <li ><a href="managerCourse.html" th:href="@{/managerCourse}">
+                <li ><a href="managerCourse.html" th:href="@{/managerHome/managerCourse}">
                     <span class="glyphicon glyphicon-search"></span>
                     管理课程</a></li>
-                <li ><a href="managerStudent.html" th:href="@{/managerStudent}">
+                <li ><a href="managerStudent.html" th:href="@{/managerHome/managerStudent}">
                     <span class="glyphicon glyphicon-search"></span>
                     管理学生</a></li>
-                <li ><a href="managerTeacher.html" th:href="@{/managerTeacher}">
+                <li ><a href="managerTeacher.html" th:href="@{/managerHome/managerTeacher}">
                     <span class="glyphicon glyphicon-search"></span>
                     管理教师</a></li>
                 <li ><a href="logout" th:href="@{/logout}">
@@ -51,7 +51,7 @@
                         <tbody>
                         <tr>
                             <td class="text-center">工号:</td>
-                            <td class="text-center" th:text="${session.manager.getId()}">123</td>
+                            <td class="text-center" th:text="${manager.getId()}">123</td>
                         </tr>
                         </tbody>
                     </table>

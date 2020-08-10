@@ -18,12 +18,12 @@
         </div>
         <div>
             <ul class="nav navbar-nav navbar-right">
-                <li><a th:text="${session.manager.getId()}"><span class="glyphicon glyphicon-user"></span>
+                <li><a th:text="${username}"><span class="glyphicon glyphicon-user"></span>
                     2017211412</a></li>
-                <li ><a href="managerStudent.html" th:href="@{/managerStudent}">
+                <li ><a href="managerStudent.html" th:href="@{/managerHome/managerStudent}">
                     <span class="glyphicon glyphicon-search"></span>
                     管理学生</a></li>
-                <li ><a href="managerTeacher.html" th:href="@{/managerTeacher}">
+                <li ><a href="managerTeacher.html" th:href="@{/managerHome/managerTeacher}">
                     <span class="glyphicon glyphicon-search"></span>
                     管理教师</a></li>
 <!--                <li ><a href="teacherHome.html" th:href="@{/teacherHome}">-->
@@ -48,14 +48,17 @@
                     <br>
                     <form th:action="managerSelectCourse" th:method="post">
                         <label>
-                            <select name="selectCollege" th:each="college : ${session.collegeList}">
-                                <option>all</option>
-                                <option th:text="${college}">123</option>
+                            <select name="selectCollege" >
+                                <option th:text="${selectedCollege}">all</option>
+                                <option th:each="college : ${collegeList}"
+                                        th:text="${college}"
+                                        th:value="${college}">
+                                </option>
                             </select>
                         </label>
                         <button type="submit" class="btn btn-info btn-sm">筛选</button>
                         <p style="text-align: right">
-                            <a type="button" class="btn btn-info" href="managerInputCourse.html" th:href="@{/managerInputCourse}">录入课程</a>
+                            <a type="button" class="btn btn-info" href="managerInputCourse.html" th:href="@{/managerHome/managerInputCourse}">录入课程</a>
                         </p>
                         <table class="table table-hover">
                             <thead>
@@ -69,16 +72,16 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr th:each="course : ${session.courseList}">
+                            <tr th:each="course : ${courseList}">
                                 <td class="text-center" th:text="${course.getId()}">12345</td>
                                 <td class="text-center" th:text="${course.getName()}">数据库</td>
                                 <td class="text-center" th:text="${course.getTeacherId()}">郭雨心</td>
                                 <td class="text-center" th:text="${course.getCollege()}">计算机学院</td>
                                 <td class="text-center">
-                                    <a type="button" class="btn btn-info" href="managerChangeCourse.html" th:href="@{/managerChangeCourse(id=${course.getId()})}">修改</a>
+                                    <a type="button" class="btn btn-info" href="managerChangeCourse.html" th:href="@{/managerHome/managerChangeCourse(id=${course.getId()})}">修改</a>
                                 </td>
                                 <td class="text-center">
-                                    <a type="button" class="btn btn-warning" href="managerChangeCourse.html" th:href="@{/managerDeleteCourse(id=${course.getId()})}">删除</a>
+                                    <a type="button" class="btn btn-warning" href="managerChangeCourse.html" th:href="@{/managerHome/managerDeleteCourse(id=${course.getId()})}">删除</a>
                                 </td>
                             </tr>
                             </tbody>
