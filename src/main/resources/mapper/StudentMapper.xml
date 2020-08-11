@@ -30,9 +30,8 @@
     </select>
 
     <select id="findById" resultType="database.part.db2.entity.Student">
-        select s.id, s.name, s.sex, s.email, c.college, c.major
+        select s.id, s.name, s.sex, s.email
         from student s
-        join class c on s.class_id = c.id
         where s.id=#{id}
     </select>
 
@@ -69,7 +68,7 @@
         select s.id, s.name, s.sex, s.email, s.class_id, c.college, c.major
         from student s
         join class c on s.class_id = c.id
-        where c.college=#{college}
+        where c.college = #{college}
     </select>
 
 </mapper>

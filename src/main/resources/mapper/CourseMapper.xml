@@ -4,17 +4,24 @@
 <mapper namespace="database.part.db2.mapper.CourseMapper">
 
     <select id="findInfo" resultType="database.part.db2.dto.CourseInfo">
-        select s.id, s.name, s.teacherId, c.college
+        select s.id, s.name, s.teacher_id, c.name as teacherName, c.college
         from course s
-        join class c on s.class_id = c.id
+        join teacher c on s.teacher_id = c.id
     </select>
-    <select id="findByCollege" resultType="database.part.db2.dto.CourseInfo">
-        select s.id, s.name, s.teacherId, c.college
+
+    <select id="findInfoByCollege" resultType="database.part.db2.dto.CourseInfo">
+        select s.id, s.name, s.teacher_id, c.name as teacherName, c.college
         from course s
-        join class c on s.class_id = c.id
+        join teacher c on s.teacher_id = c.id
         where c.college = #{college}
     </select>
 
+    <select id="findInfoById" resultType="database.part.db2.dto.CourseInfo">
+        select s.id, s.name, s.teacher_id, c.name as teacherName, c.college
+        from course s
+        join teacher c on s.teacher_id = c.id
+        where s.id = #{id}
+    </select>
 
     <select id="findAll" resultType="database.part.db2.entity.Course">
         select *

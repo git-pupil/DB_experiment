@@ -15,14 +15,14 @@
     </insert>
 
     <update id="update">
-        update teacher set name=#{name}, sex=#{sex}, email=#{email}, collge=#{college} where id=#{id}
+        update teacher set name=#{name}, sex=#{sex}, email=#{email}, college=#{college} where id=#{id}
     </update>
 
     <delete id="deleteById">
         delete from teacher where id=#{id}
     </delete>
 
-    <select id="findByCollege">
+    <select id="findByCollege" resultType="database.part.db2.entity.Teacher">
         select * from teacher where college = #{college}
     </select>
 

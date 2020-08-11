@@ -9,6 +9,16 @@
     <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 
+<script>
+    var flagf = [[${existedStudent}]];
+    if(flagf == 1)
+        alert("此学号已经存在！请确认后重新输入");
+
+    var flagf = [[${existedClass}]];
+    if(flagf == 0)
+        alert("此班级不存在！请确认后重新输入");
+</script>
+
 <body>
 <nav class="navbar navbar-default" role="navigation" style="background-color: #ffd9d9">
     <div class="container-fluid">
@@ -17,7 +27,7 @@
         </div>
         <div>
             <ul class="nav navbar-nav navbar-right">
-                <li><a th:text="${username}"><span class="glyphicon glyphicon-user"></span>
+                <li><a th:text="${session.username}"><span class="glyphicon glyphicon-user"></span>
                     2017211412</a></li>
                 <li ><a href="managerCourse.html" th:href="@{/managerHome/managerCourse}">
                     <span class="glyphicon glyphicon-search"></span>
@@ -60,7 +70,7 @@
                                 <td class="text-center">班级</td>
                                 <td class="text-center">
                                     <label>
-                                        <input type="text" name="classid" class="form-control" placeholder="" required>
+                                        <input type="text" name="classId" class="form-control" placeholder="" required>
                                     </label>
                                 </td>
                             </tr>

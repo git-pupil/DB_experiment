@@ -17,15 +17,15 @@
         </div>
         <div>
             <ul class="nav navbar-nav navbar-right">
-                <li><a th:text="${session.manager.getId()}"><span class="glyphicon glyphicon-user"></span>
+                <li><a th:text="${session.username}"><span class="glyphicon glyphicon-user"></span>
                     2017211412</a></li>
-                <li ><a href="managerCourse.html" th:href="@{/managerCourse}">
+                <li ><a href="managerCourse.html" th:href="@{/managerHome/managerCourse}">
                     <span class="glyphicon glyphicon-search"></span>
                     管理课程</a></li>
-                <li ><a href="managerStudent.html" th:href="@{/managerStudent}">
+                <li ><a href="managerStudent.html" th:href="@{/managerHome/managerStudent}">
                     <span class="glyphicon glyphicon-search"></span>
                     管理学生</a></li>
-                <li ><a href="managerTeacher.html" th:href="@{/managerTeacher}">
+                <li ><a href="managerTeacher.html" th:href="@{/managerHome/managerTeacher}">
                     <span class="glyphicon glyphicon-search"></span>
                     管理教师</a></li>
                 <li ><a href="logout" th:href="@{/logout}">
@@ -45,52 +45,58 @@
                 <hr>
                 <div style="width: 800px;float: left">
                     <br>
-                    <form action="managerStudent.html" th:action="mangerChangeTeacher" method="get" th:method="post">
+                    <form action="managerTeacher.html" th:action="managerChangeTeacher" method="get" th:method="post">
                         <table class="table table-hover">
                             <tbody>
                             <tr>
                                 <td class="text-center">工号</td>
-                                <td class="text-center" th:text="teacher.getId()"></td>
+                                <td class="text-center" th:text="${teacher.getId()}"></td>
                                 <td class="text-center">
                                     <label>
-                                        <input type="text" name="id" class="form-control" placeholder="" required>
+                                        <input type="text" name="id" class="form-control" readonly = "readonly" th:value="${teacher.getId()}">
                                     </label>
                                 </td>
                             </tr>
                             </tr>
                             <tr>
                                 <td class="text-center">姓名</td>
-                                <td class="text-center" th:text="teacher.getName()"></td>
+                                <td class="text-center" th:text="${teacher.getName()}"></td>
                                 <td class="text-center">
                                     <label>
-                                        <input type="text" name="name" class="form-control" placeholder="" required>
+                                        <input type="text" name="name" class="form-control" placeholder="" required th:value="${teacher.getName()}">
                                     </label>
                                 </td>
                             </tr>
                             <tr>
                                 <td class="text-center">性别</td>
-                                <td class="text-center" th:text="teacher.getSex()"></td>
+                                <td class="text-center" th:text="${teacher.getSex()}"></td>
                                 <td class="text-center">
                                     <label>
-                                        <input type="text" name="sex" class="form-control" placeholder="" required>
+                                        <input type="text" name="sex" class="form-control" placeholder="" required th:value="${teacher.getSex()}">
                                     </label>
                                 </td>
                             </tr>
                             <tr>
                                 <td class="text-center">学院</td>
-                                <td class="text-center" th:text="teacher.getCollege()"></td>
+                                <td class="text-center" th:text="${teacher.getCollege()}"></td>
                                 <td class="text-center">
                                     <label>
-                                        <input type="text" name="college" class="form-control" placeholder="" required>
+                                        <select name="college" >
+                                            <option th:text="${selectedCollege}">请选择学院</option>
+                                            <option th:each="college : ${collegeList}"
+                                                    th:text="${college}"
+                                                    th:value="${college}">
+                                            </option>
+                                        </select>
                                     </label>
                                 </td>
                             </tr>
                             <tr>
                                 <td class="text-center">邮箱</td>
-                                <td class="text-center" th:text="teacher.getEmail()"></td>
+                                <td class="text-center" th:text="${teacher.getEmail()}"></td>
                                 <td class="text-center">
                                     <label>
-                                        <input type="text" name="email" class="form-control" placeholder="" required>
+                                        <input type="text" name="email" class="form-control" placeholder="" required th:value="${teacher.getEmail()}">
                                     </label>
                                 </td>
                             </tr>

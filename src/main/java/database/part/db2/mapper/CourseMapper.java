@@ -15,7 +15,7 @@ public interface CourseMapper {
 
     public List<CourseInfo> findInfo();
     public List<CourseInfo> findInfoByCollege(String college);
-
+    public CourseInfo findInfoById(Long id);
 
     public List<Course> findAll();
     public List<Course> findByTeacherId(@Param(value = "id")Long teacherId);

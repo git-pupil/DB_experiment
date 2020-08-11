@@ -7,5 +7,6 @@ public class CourseInfo {
     private Long id;
     private String name;
     private Long teacherId;
+    private String teacherName;
     private String college;
 }

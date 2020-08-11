@@ -3,14 +3,18 @@ package database.part.db2.service.impl;
 import database.part.db2.dto.CourseInfo;
 import database.part.db2.dto.StudentInfo;
 import database.part.db2.entity.Course;
+import database.part.db2.entity.Manager;
 import database.part.db2.entity.Student;
 import database.part.db2.entity.Teacher;
+import database.part.db2.entity.Class;
 import database.part.db2.entity.auth.User;
 import database.part.db2.mapper.CourseMapper;
 import database.part.db2.mapper.GradeMapper;
+import database.part.db2.mapper.ManagerMapper;
 import database.part.db2.mapper.StudentMapper;
 import database.part.db2.mapper.TeacherMapper;
 import database.part.db2.mapper.auth.UserMapper;
+import database.part.db2.mapper.ClassMapper;
 import database.part.db2.service.IManagerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -22,6 +26,8 @@ import java.util.List;
 @Service
 public class ManagerService implements IManagerService {
     @Autowired
+    ManagerMapper managerMapper;
+    @Autowired
     StudentMapper studentMapper;
     @Autowired
     TeacherMapper teacherMapper;
@@ -31,14 +37,32 @@ public class ManagerService implements IManagerService {
     GradeMapper gradeMapper;
     @Autowired
     UserMapper userMapper;
+    @Autowired
+    ClassMapper classMapper;
 
+    @Override
+    public Manager getManagerInfo(Authentication authentication){
+        Long userId = Long.valueOf(authentication.getName());//获取当前登录用户的Id
+        Manager ManagerInfo = managerMapper.findById(userId);
+        return ManagerInfo;
+    }
+
+    @Override
+    public StudentInfo getStudentInfoById(Long id){
+        return studentMapper.findInfoById(id);
+    }
+
+    @Override
     public List<StudentInfo> getStudentListByCollege(String college) {
         return studentMapper.findInfoByCollege(college);
     }
+
+    @Override
     public List<Teacher> getTeacherListByCollege(String college){
         return teacherMapper.findByCollege(college);
     }
 
+    @Override
     public List<CourseInfo> getCourseListByCollege(String college){return courseMapper.findInfoByCollege(college);}
 
     @Override
@@ -50,6 +74,8 @@ public class ManagerService implements IManagerService {
         return studentMapper.findInfo();
     }
 
+    @Override
+    public Teacher getTeacherById(Long id){return teacherMapper.findById(id);}
     @Override
     public List<Teacher> getTeacherList() {
         return teacherMapper.findAll();
@@ -65,7 +91,14 @@ public class ManagerService implements IManagerService {
     }
 
     @Override
+    public CourseInfo getCourseInfoById(Long id){ return courseMapper.findInfoById(id); }
+
+    @Override
+    public Class getClassById(Long id){ return classMapper.findById(id); }
+
+    @Override
     public Student changeStudent(Student student) {
+
         studentMapper.update(student);
         return studentMapper.findById(student.getId());
     }
@@ -104,7 +137,8 @@ public class ManagerService implements IManagerService {
 
     @Override
     public int deleteCourse(Long courseId) {
-        return gradeMapper.deleteByCourseId(courseId);
+        gradeMapper.deleteByCourseId(courseId);
+        return courseMapper.deleteById(courseId);
     }
 
     @Override

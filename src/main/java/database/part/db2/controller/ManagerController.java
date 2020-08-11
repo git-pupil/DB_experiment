@@ -23,9 +23,9 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import javax.servlet.http.HttpSession;
 import java.util.Arrays;
 import java.util.List;
@@ -36,66 +36,72 @@ public class ManagerController {
 
     @Autowired
     ManagerService service;
-    Authentication au = SecurityContextHolder.getContext().getAuthentication();
-    List<String> collegeList = Arrays.asList("信息与通信工程学院","电子工程学院",
-            "计算机","网络空间安全学院","人工智能学院","软件学院","自动化学院",
-            "现代邮政学院","光电信息学院","经济管理学院","理学院","人文学院",
-            "数字媒体与设计艺术学院","马克思主义学院","国际学院","网络教育学院",
-            "继续教育学院","叶培大创新创业学院");
+
+    List<String> collegeList = Arrays.asList("信息与通信工程","电子工程",
+            "计算机","网络空间安全","人工智能","软件","自动化",
+            "现代邮政","光电信息","经济管理","理","人文",
+            "数字媒体与设计艺术","马克思主义","国际","网络教育",
+            "继续教育","叶培大创新创业");
 
     @GetMapping("/managerStudent")
-    public String getStudentList(Model model, HttpServletRequest request) {
+    public String getStudentList(Model model) {
+
         model.addAttribute("collegeList", collegeList);
+
         List<StudentInfo> studentList = service.getStudentInfoList();
         model.addAttribute("studentList", studentList);
         model.addAttribute("selectedCollege","全部学院");
+
         return "managerStudent";
     }
 
     @PostMapping("/managerSelectStudent")
     public String getStudentListByCollege(Model model,@RequestParam String selectCollege) {
+        model.addAttribute("username", SecurityContextHolder.getContext().getAuthentication().getName());
         model.addAttribute("collegeList", collegeList);
+
         List<StudentInfo> studentList = service.getStudentListByCollege(selectCollege);
         model.addAttribute("studentList", studentList);
         model.addAttribute("selectedCollege",selectCollege);
+
         return "managerStudent";
     }
 
     @GetMapping("/managerBeginChangeStudent")
     public String beginChangeStudent(@RequestParam Long id, Model model){
         //根据id返回student实体
+        StudentInfo student = service.getStudentInfoById(id);
+        model.addAttribute("student",student);
         return "managerChangeStudent";
     }
 
     @PostMapping("/managerChangeStudent")
-    public String changeStudent(HttpServletRequest request,@RequestParam Long id) {
-        HttpSession session = request.getSession();
+    public String changeStudent(HttpServletRequest request, Model model, @RequestParam Long id,
+                                @RequestParam Long classId, @RequestParam String name,
+                                @RequestParam String sex, @RequestParam String email) {
+        request.setAttribute("existedClass","1");
         Student student = new Student();
 
-        student.setId(((Student)session.getAttribute("student")).getId());
-        Long classId = (Long)session.getAttribute("class");
-        String name = (String)session.getAttribute("name");
-        String sex = (String)session.getAttribute("sex");
-        String email = (String)session.getAttribute("email");
+        student.setId(id);
+        student.setClassId(classId);
+        student.setName(name);
+        student.setSex(sex);
+        student.setEmail(email);
 
-        if( classId != null)
-            student.setClassId(classId);
-        else
-            student.setClassId(((Student)session.getAttribute("student")).getClassId());
-        if( name != null)
-            student.setName(name);
-        else
-            student.setName(((Student)session.getAttribute("student")).getName());
-        if( sex != null)
-            student.setSex(sex);
-        else
-            student.setSex(((Student)session.getAttribute("student")).getSex());
-        if( email != null)
-            student.setEmail(email);
-        else
-            student.setEmail(((Student)session.getAttribute("student")).getEmail());
+        if(service.getClassById(classId)==null){
+            model.addAttribute("student",service.getStudentInfoById(id));
+            request.setAttribute("existedClass","0");
+            return "managerChangeStudent";
+        }
 
         service.changeStudent(student);
+
+        model.addAttribute("collegeList", collegeList);
+
+        List<StudentInfo> studentList = service.getStudentInfoList();
+        model.addAttribute("studentList", studentList);
+        model.addAttribute("selectedCollege","全部学院");
+
         return "managerStudent";
     }
 
@@ -105,39 +111,54 @@ public class ManagerController {
     }
 
     @PostMapping("/managerInputStudent")
-    public String inputStudent(Model model, HttpServletRequest request, @RequestParam Long id,
-                               @RequestParam Long classid,
-                               @RequestParam String name, @RequestParam String sex, @RequestParam String email) {
-        HttpSession session = request.getSession();
+    public String inputStudent(HttpServletRequest request, Model model, @RequestParam Long id,
+                               @RequestParam Long classId, @RequestParam String name,
+                               @RequestParam String sex, @RequestParam String email) {
+        request.setAttribute("existedStudent", "0");
+        request.setAttribute("existedClass","1");
+
         Student student = new Student();
+
         student.setId(id);
-        student.setClassId(classid);
+        student.setClassId(classId);
         student.setName(name);
         student.setSex(sex);
         student.setEmail(email);
 
-        service.inputStudent(student);
-        System.out.println(student);
+        if(service.getClassById(classId)==null){
+            request.setAttribute("existedClass","0");
+            return "managerInputStudent";
+        }
+
+        if(service.inputStudent(student)==null){
+            request.setAttribute("existedStudent", "1");
+            return "managerInputStudent";
+        }
 
         model.addAttribute("collegeList", collegeList);
+
         List<StudentInfo> studentList = service.getStudentInfoList();
         model.addAttribute("studentList", studentList);
         model.addAttribute("selectedCollege","全部学院");
+
         return "managerStudent";
     }
 
     @GetMapping("/managerDeleteStudent")
     public String deleteStudent(Model model, @RequestParam Long id) {
         service.deleteStudent(id);
+
         model.addAttribute("collegeList", collegeList);
+
         List<StudentInfo> studentList = service.getStudentInfoList();
         model.addAttribute("studentList", studentList);
         model.addAttribute("selectedCollege","全部学院");
+
         return "managerStudent";
     }
 
     @GetMapping("/managerTeacher")
-    public String getTeacherList(HttpServletRequest request, Model model) {
+    public String getTeacherList(Model model) {
         model.addAttribute("collegeList", collegeList);
 
         List<Teacher> teacherList = service.getTeacherList();
@@ -147,81 +168,95 @@ public class ManagerController {
     }
 
     @PostMapping("/managerSelectTeacher")
-    public String getTeacherListByCollege(HttpServletRequest request,@RequestParam String selectCollege, Model model) {
-        System.out.println(selectCollege);
+    public String getTeacherListByCollege(@RequestParam String selectCollege, Model model) {
         model.addAttribute("collegeList", collegeList);
+
         List<Teacher> teacherList = service.getTeacherListByCollege(selectCollege);
         model.addAttribute("teacherList", teacherList);
         model.addAttribute("selectedCollege",selectCollege);
         return "managerTeacher";
     }
 
+    @GetMapping("/managerBeginChangeTeacher")
+    public String beginChangeTeacher(@RequestParam Long id, Model model){
+        //根据id返回teacher实体
+        Teacher teacher = service.getTeacherById(id);
+        model.addAttribute("teacher",teacher);
 
+        model.addAttribute("collegeList", collegeList);
+        model.addAttribute("selectedCollege",teacher.getCollege());
+        return "managerChangeTeacher";
+    }
 
     @PostMapping("/managerChangeTeacher")
-    public String changeTeacher(HttpServletRequest request) {
-        HttpSession session = request.getSession();
+    public String changeTeacher(Model model, @RequestParam Long id, @RequestParam String college,
+                                @RequestParam String name, @RequestParam String sex,
+                                @RequestParam String email) {
         Teacher teacher = new Teacher();
 
-        teacher.setId(((Teacher)session.getAttribute("teacher")).getId());
-        String college = (String)session.getAttribute("college");
-        String name = (String)session.getAttribute("name");
-        String sex = (String)session.getAttribute("sex");
-        String email = (String)session.getAttribute("email");
-
-
-        if( college != null)
-            teacher.setCollege(college);
-        else
-            teacher.setCollege(((Teacher)session.getAttribute("teacher")).getCollege());
-        if( name != null)
-            teacher.setName(name);
-        else
-            teacher.setName(((Teacher)session.getAttribute("teacher")).getName());
-        if( sex != null)
-            teacher.setSex(sex);
-        else
-            teacher.setSex(((Teacher)session.getAttribute("teacher")).getSex());
-        if( email != null)
-            teacher.setEmail(email);
-        else
-            teacher.setEmail(((Teacher)session.getAttribute("teacher")).getEmail());
-
-        service.changeTeacher(teacher);
-        return "managerTeacher";
-    }
-
-    @GetMapping("/managerBeginInputTeacher")
-    public String beginInputTeacher(){
-        return "managerInputTeacher";
-    }
-
-    @PostMapping("/managerInputTeacher")
-    public String inputTeacher(Model model, @RequestParam Long id,
-                               @RequestParam String college,
-                               @RequestParam String name, @RequestParam String sex, @RequestParam String email) {
-        Teacher teacher = new Teacher();
         teacher.setId(id);
         teacher.setCollege(college);
         teacher.setName(name);
         teacher.setSex(sex);
         teacher.setEmail(email);
 
-        service.inputTeacher(teacher);
+        service.changeTeacher(teacher);
+
         model.addAttribute("collegeList", collegeList);
+
         List<Teacher> teacherList = service.getTeacherList();
         model.addAttribute("teacherList", teacherList);
         model.addAttribute("selectedCollege","全部学院");
+
+        return "managerTeacher";
+    }
+
+    @GetMapping("/managerBeginInputTeacher")
+    public String beginInputTeacher(Model model){
+        model.addAttribute("collegeList", collegeList);
+        model.addAttribute("selectedCollege","请选择学院");
+        return "managerInputTeacher";
+    }
+
+    @PostMapping("/managerInputTeacher")
+    public String inputTeacher(HttpServletRequest request, Model model,
+                               @RequestParam Long id, @RequestParam String college,
+                               @RequestParam String name, @RequestParam String sex,
+                               @RequestParam String email) {
+        request.setAttribute("existedTeacher", "0");
+        Teacher teacher = new Teacher();
+
+        teacher.setId(id);
+        teacher.setCollege(college);
+        teacher.setName(name);
+        teacher.setSex(sex);
+        teacher.setEmail(email);
+
+        model.addAttribute("collegeList", collegeList);
+
+        if(service.inputTeacher(teacher)==null){
+            model.addAttribute("selectedCollege","请选择学院");
+            request.setAttribute("existedTeacher", "1");
+            return "managerInputTeacher";
+        }
+
+        model.addAttribute("selectedCollege","全部学院");
+        List<Teacher> teacherList = service.getTeacherList();
+        model.addAttribute("teacherList", teacherList);
+
         return "managerTeacher";
     }
 
     @GetMapping("/managerDeleteTeacher")
     public String deleteTeacher(Model model, @RequestParam Long id) {
         service.deleteTeacher(id);
+
         model.addAttribute("collegeList", collegeList);
+
         List<Teacher> teacherList = service.getTeacherList();
         model.addAttribute("teacherList", teacherList);
         model.addAttribute("selectedCollege","全部学院");
+
         return "managerTeacher";
     }
 
@@ -243,25 +278,39 @@ public class ManagerController {
         return "managerCourse";
     }
 
+    @GetMapping("/managerBeginChangeCourse")
+    public String beginChangeCourse(@RequestParam Long id, Model model){
+        //根据id返回course实体
+        CourseInfo course = service.getCourseInfoById(id);
+        model.addAttribute("course",course);
+
+        return "managerChangeCourse";
+    }
+
     @PostMapping("/managerChangeCourse")
-    public String changeCourse(HttpServletRequest request) {
-        HttpSession session = request.getSession();
+    public String changeCourse(HttpServletRequest request, Model model, @RequestParam Long id,
+                                @RequestParam String name, @RequestParam Long teacherId) {
+        request.setAttribute("existedTeacher","1");
         Course course = new Course();
 
-        course.setId(((Course)session.getAttribute("course")).getId());
-        String name = (String)session.getAttribute("name");
-        Long teacherId = (Long)session.getAttribute("teacherId");
+        course.setId(id);
+        course.setName(name);
+        course.setTeacherId(teacherId);
 
-        if( name != null)
-            course.setName(name);
-        else
-            course.setName(((Course)session.getAttribute("course")).getName());
-        if( teacherId != null)
-            course.setTeacherId(teacherId);
-        else
-            course.setTeacherId(((Course)session.getAttribute("course")).getTeacherId());
+        if(service.getTeacherById(teacherId)==null){
+            model.addAttribute("course",service.getCourseInfoById(id));
+            request.setAttribute("existedTeacher","0");
+            return "managerChangeCourse";
+        }
 
         service.changeCourse(course);
+
+        model.addAttribute("collegeList", collegeList);
+
+        List<CourseInfo> courseList = service.getCourseInfoList();
+        model.addAttribute("courseList", courseList);
+        model.addAttribute("selectedCollege","全部学院");
+
         return "managerCourse";
     }
 
@@ -269,20 +318,33 @@ public class ManagerController {
     public String beginInputCourse(){
         return "managerInputCourse";
     }
+
     @PostMapping("/managerInputCourse")
-    public String inputCourse(Model model, @RequestParam Long id,
+    public String inputCourse(HttpServletRequest request, Model model, @RequestParam Long id,
                               @RequestParam Long teacherId,@RequestParam String name) {
+        request.setAttribute("existedCourse", "0");
+        request.setAttribute("existedTeacher","1");
+
         Course course = new Course();
         course.setId(id);
         course.setTeacherId(teacherId);
         course.setName(name);
 
-        service.inputCourse(course);
+        if(service.getTeacherById(teacherId)==null){
+            request.setAttribute("existedTeacher","0");
+            return "managerInputCourse";
+        }
+
+        if(service.inputCourse(course)==null){
+            request.setAttribute("existedCourse", "1");
+            return "managerInputCourse";
+        }
 
         model.addAttribute("collegeList", collegeList);
         List<CourseInfo> courseList = service.getCourseInfoList();
         model.addAttribute("courseList", courseList);
         model.addAttribute("selectedCollege","全部学院");
+
         return "managerCourse";
     }
 
