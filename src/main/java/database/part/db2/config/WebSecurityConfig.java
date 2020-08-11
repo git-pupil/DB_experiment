@@ -24,6 +24,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/student/**").hasRole("STUDENT")
                 .antMatchers("/manager/**").hasRole("MANAGER")
                 .antMatchers("/myLogin").permitAll()
+                .antMatchers("/logout").permitAll()
                 //.anyRequest().authenticated()//其它地址都放行
                 .and()
                 .formLogin()
@@ -33,7 +34,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .failureForwardUrl("/loginFailure")
                 .and()
                 .logout()
-                .logoutUrl("/myLogout");
+                .logoutUrl("/logout")
+                .logoutSuccessUrl("/logoutSuccess");
     }
 
     @Override
