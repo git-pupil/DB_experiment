@@ -120,11 +120,11 @@ public class TeacherLookGradeController {
         model.addAttribute("username", username);
 
         System.out.println(courseId);
-
+        Course course = service.findCourse(courseId);
         //当前grade表条目数 以获取新的id
         Long num = Long.valueOf(service.count());
         System.out.println(id);
-
+        model.addAttribute("course",course);
         //设置grade信息
         Grade grade = new Grade(id,courseId);
         grade.setId(++num);
