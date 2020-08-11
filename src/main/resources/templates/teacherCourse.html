@@ -49,17 +49,17 @@
                         </thead>
                         <tbody>
                         <tr th:each="course:${courseList}">
-                            <td class="text-center" th:text="${course.getId()}">123</td>
-                            <td class="text-center" th:text="${course.getName()}">数据库课程设计</td>
+                            <td class="text-center" th:text="${course.getId()}"></td>
+                            <td class="text-center" th:text="${course.getName()}"></td>
                             <td class="text-center">
                                 <a type="button" class="btn btn-info" href="teacherLookGrade.html" th:href="@{/teacherLookGrade(courseId=${course.getId()})}">查询修改成绩</a>
                             </td>
                             <td class="text-center">
-                                <a type="button" class="btn btn-info" href="teacherInputGrade.html" th:href="@{/teacherInputGrade(courseId=${course.getId()})}">录入成绩</a>
+                                <a type="button" class="btn btn-info" href="teacherInputGrade.html" th:href="@{/InputGrade(courseId=${course.getId()})}">录入成绩</a>
                             </td>
                             </td>
                             <td class="text-center">
-                                <a type="button" class="btn btn-info" href="teacherAddStudent.html" th:href="@{/teacherAddStudent(courseId=${course.getId()})}">添加学生</a>
+                                <a type="button" class="btn btn-info" href="teacherAddStudent.html" th:href="@{/AddStudent(courseId=${course.getId()})}">添加学生</a>
                             </td>
                             <td class="text-center">
                                 <a type="button" class="btn btn-info" href="teacherLookCharm.html" th:href="@{/teacherLookCharm(courseId=${course.getId()})}">查看成绩分布饼图</a>

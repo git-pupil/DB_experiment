@@ -18,8 +18,7 @@
         </div>
         <div>
             <ul class="nav navbar-nav navbar-right">
-                <li><a th:text="${session.username}"><span class="glyphicon glyphicon-user"></span>
-                    郭雨心</a></li>
+                <li><a th:text="${username}"><span class="glyphicon glyphicon-user"></span></a></li>
                 <li ><a href="teacherHome.html" th:href="@{/teacherHome}">
                     <span class="glyphicon glyphicon-search"></span>
                     我的信息</a></li>
@@ -39,12 +38,12 @@
     <div class="wrapper"><!--wrapper 将页面上的元素都包裹其中-->
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
-                <h1 th:text="${${session.course.getName()}">数据库课程设计</h1>
+                <h1 th:text="${course.getName()}">数据库课程设计</h1>
                 <hr>
 
                 <div style="width: 800px;float: left">
                     <br>
-                    <form action="teacherLookGrade.html" th:action="TeacherChangeGrade" method="get" th:method="post">
+                    <form action="teacherLookGrade.html" th:action="@{/teacherChangeGrade(studentId=${student.getId()},courseId=${course.getId()})}" method="get" th:method="post">
                     <table class="table table-hover">
                         <thead>
                         <tr>
@@ -57,16 +56,16 @@
                         </thead>
                         <tbody>
                         <tr>
-                            <td class="text-center" th:text="${session.grade.getStudentId()}"></td>
-                            <td class="text-center" th:text="${session.student.getName()}"></td>
-                            <td class="text-center" th:text="${session.grade.getPoint()}"></td>
+                            <td class="text-center" th:text="${grade.getStudentId()}"></td>
+                            <td class="text-center" th:text="${student.getName()}"></td>
+                            <td class="text-center" th:text="${grade.getPoint()}"></td>
                             <td class="text-center">
                                 <label>
                                     <input type="text" name="newPoint" class="form-control" placeholder="" required>
                                 </label>
                             </td>
                             <td class="text-center">
-                                <button type="submit" class="btn btn-info">修改</button>
+                                <button type="submit" class="btn btn-info">确认修改</button>
                             </td>
                         </tr>
                         </tbody>

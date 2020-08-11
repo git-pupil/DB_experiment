@@ -17,8 +17,8 @@
         </div>
         <div>
             <ul class="nav navbar-nav navbar-right">
-                <li><a th:text="${session.username}"><span class="glyphicon glyphicon-user"></span>
-                    郭雨心</a></li>
+                <li><a th:text="${username}"><span class="glyphicon glyphicon-user"></span>
+                    </a></li>
                 <li ><a href="teacherHome.html" th:href="@{/teacherHome}">
                     <span class="glyphicon glyphicon-search"></span>
                     我的信息</a></li>
@@ -32,17 +32,15 @@
         </div>
     </div>
 </nav>
-
-
 <div class="all">
-    <div class="wrapper"><!--wrapper 将页面上的元素都包裹其中-->
+    <div class="wrapper">
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
                 <h1>添加学生</h1>
                 <hr>
                 <div style="width: 800px;float: left">
                     <br>
-                    <form action="teacherCourse.html" th:action="teacherAddStudent" method="get" th:method="post">
+                    <form action="teacherCourse.html" th:action="@{/teacherAddStudent(courseId=${course.getId()})}" method="get" th:method="post">
                         <table class="table table-hover">
                             <tbody>
                             <tr>
@@ -65,6 +63,5 @@
         </div>
     </div>
 </div>
-
 </body>
 </html>

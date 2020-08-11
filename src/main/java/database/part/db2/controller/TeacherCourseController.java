@@ -22,30 +22,42 @@ public class TeacherCourseController {
     @Autowired
     TeacherService service;
 
+    /**
+     * 教师查看课程列表
+     * @param model
+     * @param request
+     * @return teacherCourse
+     */
 
     @RequestMapping("/teacherCourse")
     String teacherCourse(Model model, HttpServletRequest request) {
         //获取相关权限
         Authentication au = SecurityContextHolder.getContext().getAuthentication();
-
         Teacher t_info = service.getInfo(au);
-        //上传相关信息
+
+        //上传用户名
         String username = t_info.getName();
-        HttpSession session = request.getSession();
         model.addAttribute("username", username);
         //获取课程列表
         List<Course> lc = service.getCourseList(au);
+        //session.setAttribute("courseList", lc);
 
-        session.setAttribute("courseList", lc);
+        //上传
         model.addAttribute("courseList", lc);
 
         return "teacherCourse";
 
     }
 
+    /**
+     * 教师查看扇形图
+     * @param model
+     * @param courseId
+     * @return teacherLookCharm
+     */
 
     @RequestMapping("/teacherLookCharm")
-    String teacherLookCharm(Model model, HttpServletRequest request, Long courseId){
+    String teacherLookCharm(Model model, Long courseId){
         //获取相关权限
         Authentication au = SecurityContextHolder.getContext().getAuthentication();
 
@@ -72,8 +84,16 @@ public class TeacherCourseController {
         return "teacherLookCharm";
 
     }
+
+    /**
+     * 教师查看直方图
+     * @param model
+     * @param courseId
+     * @return teacherLookCharm1
+     */
+
     @RequestMapping("/teacherLookCharm1")
-    String teacherLookCharm1(Model model, HttpServletRequest request, Long courseId){
+    String teacherLookCharm1(Model model,  Long courseId){
         //获取相关权限
         Authentication au = SecurityContextHolder.getContext().getAuthentication();
 

@@ -39,12 +39,12 @@
     <div class="wrapper"><!--wrapper 将页面上的元素都包裹其中-->
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
-                <h1 th:text="${session.course.getName()}-录入成绩">数据库课程设计-录入成绩</h1>
+                <h1 th:text="${course.getName()}">数据库课程设计-录入成绩</h1>
                 <hr>
 
                 <div style="width: 800px;float: left">
                     <br>
-                    <form action="teacherLookGrade.html" th:action="TeacherInputGrade" method="get" th:method="post">
+                    <form action="teacherLookGrade.html" th:action="@{/teacherInputGrade(courseId=${course.getId()})}" method="get" th:method="post">
                         <table class="table table-hover">
                             <thead>
                             <tr>
@@ -54,7 +54,7 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr th:each="student : ${session.gradeList}">
+                            <tr th:each="student : ${gradeList}">
                                 <td class="text-center" th:text="${student.getId()}">123</td>
                                 <td class="text-center" th:text="${student.getName()}">郭雨心</td>
                                 <td class="text-center">

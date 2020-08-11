@@ -18,8 +18,7 @@
         </div>
         <div>
             <ul class="nav navbar-nav navbar-right">
-                <li><a th:text="${username}"><span class="glyphicon glyphicon-user"></span>
-                    2017211412</a></li>
+                <li><a th:text="${username}"><span class="glyphicon glyphicon-user"></span></a></li>
                 <li ><a href="teacherHome.html" th:href="@{/teacherHome}">
                     <span class="glyphicon glyphicon-search"></span>
                     我的信息</a></li>
@@ -59,7 +58,7 @@
                             <td class="text-center" th:text="${student.getName()}">郭雨心</td>
                             <td class="text-center" th:text="${student.getPoint()}">100</td>
                             <td class="text-center">
-                                <a type="button" class="btn btn-info" href="teacherChangeGrade.html" th:href="@{/changeGrade(studentId=${student.getId()})}">修改</a>
+                                <a type="button" class="btn btn-info" href="teacherChangeGrade.html" th:href="@{/ChangeGrade(studentId=${student.getId()},courseId=${course.getId()})}">修改</a>
                             </td>
                         </tr>
                         </tbody>
