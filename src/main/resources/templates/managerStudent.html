@@ -83,10 +83,13 @@
                                 <td class="text-center" th:text="${student.getMajor()}">计算机</td>
                                 <td class="text-center" th:text="${student.getEmail()}">123@123.com</td>
                                 <td class="text-center">
-                                    <a type="button" class="btn btn-info" href="managerChangeStudent.html" th:href="@{/managerHome/managerBeginChangeStudent(id=${student.getId()})}">修改</a>
+                                    <a type="button" class="btn btn-danger" href="managerChangeStudent.html" th:href="@{/managerHome/managerBeginChangeStudent(id=${student.getId()})}">修改</a>
                                 </td>
                                 <td class="text-center">
                                     <a type="button" class="btn btn-warning" href="managerDeleteStudent.html" th:href="@{/managerHome/managerDeleteStudent(id=${student.getId()})}">删除</a>
+                                </td>
+                                <td class="text-center">
+                                    <a type="button" class="btn btn-success" th:href="@{/managerHome/managerChangePassword(id=${student.getId()})}">重置密码</a>
                                 </td>
                             </tr>
                             </tbody>
