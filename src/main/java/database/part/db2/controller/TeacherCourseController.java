@@ -75,6 +75,13 @@ public class TeacherCourseController {
         num4 = service.countStage(courseId,70,80);
         num5 = service.countStage(courseId,80,90);
         num6 = service.countStage(courseId,90,100);
+        System.out.println(num1);
+        System.out.println(num2);
+        System.out.println(num3);
+        System.out.println(num4);
+        System.out.println(num5);
+        System.out.println(num6);
+
         model.addAttribute("num1", num1);
         model.addAttribute("num2", num2);
         model.addAttribute("num3", num3);
@@ -117,10 +124,6 @@ public class TeacherCourseController {
         model.addAttribute("num4", num4);
         model.addAttribute("num5", num5);
         model.addAttribute("num6", num6);
-
-        System.out.println(num1);
-        System.out.println(num6);
-
 
         return "teacherLookCharm1";
 

@@ -28,7 +28,7 @@
 
 
     <select id="countStage" resultType="int">
-        select count(*) from grade where course_id=#{id} and point &gt; #{low} and point &lt; #{high}
+        select count(*) from grade where course_id=#{id} and point &gt; #{low} and point &lt;= #{high}
     </select>
     <select id="count" resultType="int">
         select count(*) from grade

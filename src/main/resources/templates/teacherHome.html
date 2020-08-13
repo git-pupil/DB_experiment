@@ -19,14 +19,15 @@
         </div>
         <div>
             <ul class="nav navbar-nav navbar-right">
-                <li><a th:text="${username}"><span class="glyphicon glyphicon-user"></span>
-                    2017211412</a></li>
+                <li><a th:text="${username}"><span class="glyphicon glyphicon-user"></span></a></li>
                 <li ><a href="teacherCourse.html" th:href="@{/teacherCourse}">
                 <span class="glyphicon glyphicon-search"></span>
                 我的课程</a></li>
                 <li ><a href="logout" th:href="@{/logout}">
+                    <span class="glyphicon glyphicon-log-out"></span>退出登录</a></li>
+                <li ><a href="userChangePassword.html" th:href="@{/changePassword}">
                     <span class="glyphicon glyphicon-log-out"></span>
-                    退出登录</a></li>
+                    修改密码</a></li>
             </ul>
         </div>
     </div>

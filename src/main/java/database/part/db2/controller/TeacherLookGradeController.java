@@ -5,9 +5,11 @@ import database.part.db2.entity.Course;
 import database.part.db2.entity.Grade;
 import database.part.db2.entity.Student;
 import database.part.db2.entity.Teacher;
+import database.part.db2.entity.auth.User;
 import database.part.db2.mapper.GradeMapper;
 import database.part.db2.mapper.StudentMapper;
 import database.part.db2.mapper.TeacherMapper;
+import database.part.db2.mapper.auth.UserMapper;
 import database.part.db2.service.ITeacherService;
 import database.part.db2.service.impl.TeacherService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +37,8 @@ public class TeacherLookGradeController {
     TeacherMapper teacherMapper;
     @Autowired
     GradeMapper gradeMapper;
+    @Autowired
+    UserMapper userMapper;
 
     /**
      * 教师主页面
@@ -281,6 +285,47 @@ public class TeacherLookGradeController {
         model.addAttribute("pointList", swg);
 
         return "teacherLookGrade";
+
+    }
+
+    @RequestMapping("/changePassword")
+    String changePsw(Model model) {
+        return "userChangePassword";
+
+    }
+
+    @RequestMapping("/userChangePassword")
+    String changePassword(Model model, @RequestParam(value = "password") String password, @RequestParam(value = "password1") String psw1, @RequestParam(value = "password2") String psw2) {
+        Authentication au = SecurityContextHolder.getContext().getAuthentication();
+        String usn = au.getName();
+        User user = userMapper.findByUsername(usn);
+        System.out.println(user.getPassword());
+        System.out.println(password);
+        if(user.getPassword().equals(password))
+        {
+            System.out.println(1);
+            if(psw1 == null || psw2 == null)
+            {
+                model.addAttribute("ErrorMsg2","请输入新密码");
+                return "userChangePassword";
+            }
+            else if(psw1.equals(psw2))
+            {
+                user.setPassword(psw1);
+                userMapper.update(user);
+                return "login";
+            }
+            else {
+                model.addAttribute("ErrorMsg3", "两次密码输入不一致");
+                return "userChangePassword";
+                }
+        }
+        else
+            {
+            model.addAttribute("ErrorMsg1", "原始密码错误，请重新输入");
+            return "userChangePassword";
+            }
+
 
     }
 
