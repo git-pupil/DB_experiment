@@ -81,7 +81,7 @@
                                 <td class="text-center" th:text="${teacher.getCollege()}"></td>
                                 <td class="text-center">
                                     <label>
-                                        <select name="college" >
+                                        <select name="college" class="form-control">
                                             <option th:text="${selectedCollege}">请选择学院</option>
                                             <option th:each="college : ${collegeList}"
                                                     th:text="${college}"

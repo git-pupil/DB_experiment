@@ -118,6 +118,9 @@ public class TeacherCourseController {
         model.addAttribute("num5", num5);
         model.addAttribute("num6", num6);
 
+        System.out.println(num1);
+        System.out.println(num6);
+
 
         return "teacherLookCharm1";
 

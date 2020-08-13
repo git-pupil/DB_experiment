@@ -129,10 +129,15 @@ public class TeacherLookGradeController {
         Grade grade = new Grade(id,courseId);
         grade.setId(++num);
 
+        List<Course> lc = service.getCourseList(au);
+        //session.setAttribute("courseList", lc);
+
+        //上传
+        model.addAttribute("courseList", lc);
         //数据库新增
         gradeMapper.create(grade);
 
-        return "teacherAddStudent";
+        return "teacherCourse";
     }
 
     /**
@@ -202,7 +207,13 @@ public class TeacherLookGradeController {
         System.out.println(grade);
         gradeMapper.update(grade);
 
-        return "teacherChangeGrade";
+        //获取成绩信息
+        List<StudentWithGrade> swg = service.getStudentList(courseId);
+
+        //上传信息
+        model.addAttribute("pointList", swg);
+
+        return "teacherLookGrade";
     }
 
     /**
@@ -263,8 +274,14 @@ public class TeacherLookGradeController {
             grade.setPoint(points.get(i));
             gradeMapper.update(grade);
         }
+        //获取成绩信息
+        List<StudentWithGrade> swg = service.getStudentList(courseId);
 
-        return "teacherInputGrade";
+        //上传信息
+        model.addAttribute("pointList", swg);
+
+        return "teacherLookGrade";
+
     }
 
 }
