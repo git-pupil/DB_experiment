@@ -313,7 +313,7 @@ public class TeacherLookGradeController {
             {
                 user.setPassword(psw1);
                 userMapper.update(user);
-                return "login";
+                return "redirect:/logout";
             }
             else {
                 model.addAttribute("ErrorMsg3", "两次密码输入不一致");
