@@ -72,7 +72,11 @@
                                 <td class="text-center" th:text="${teacher.getSex()}"></td>
                                 <td class="text-center">
                                     <label>
-                                        <input type="text" name="sex" class="form-control" placeholder="" required th:value="${teacher.getSex()}">
+                                        <select name="sex" class="form-control">
+                                            <option th:text="${teacher.getSex()}"></option>
+                                            <option th:value="男" th:text="男"></option>
+                                            <option th:value="女" th:text="女"></option>
+                                        </select>
                                     </label>
                                 </td>
                             </tr>

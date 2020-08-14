@@ -147,6 +147,7 @@ public class ManagerService implements IManagerService {
         if (currentStudent!=null) return null;
         else {
             studentMapper.create(student);
+            createUser(String.valueOf(student.getId()),"STUDENT");
             return student;
         }
     }
@@ -157,8 +158,21 @@ public class ManagerService implements IManagerService {
         if (currentTeacher!=null) return null;
         else {
             teacherMapper.create(teacher);
+            createUser(String.valueOf(teacher.getId()),"TEACHER");
             return teacher;
         }
+    }
+
+    @Override
+    public int createUser(String id,String role){
+        User user = new User();
+
+        user.setId(userMapper.findLargestId()+1);
+        user.setUsername(id);
+        user.setPassword(String.valueOf(id));
+        user.setRole(role);
+
+        return userMapper.create(user);
     }
 
     @Override

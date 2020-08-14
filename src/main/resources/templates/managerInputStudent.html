@@ -12,7 +12,11 @@
 <script>
     var flagf = [[${existedStudent}]];
     if(flagf == 1)
-        alert("此学号已经存在！请确认后重新输入");
+        alert("此学号已被其他学生占用！请确认后重新输入");
+
+    var flagf = [[${existedTeacher}]];
+    if(flagf == 1)
+        alert("此学号已被教师占用！请确认后重新输入");
 
     var flagf = [[${existedClass}]];
     if(flagf == 0)
@@ -65,6 +69,9 @@
                                         <input type="text" name="id" class="form-control" placeholder="" required>
                                     </label>
                                 </td>
+                                <td class="text-center">
+                                    <p style="color: red" th:text="${ErrorMsg1}" th:if="${ErrorMsg1} != null"></p>
+                                </td>
                             </tr>
                             <tr>
                                 <td class="text-center">班级</td>
@@ -72,6 +79,9 @@
                                     <label>
                                         <input type="text" name="classId" class="form-control" placeholder="" required>
                                     </label>
+                                </td>
+                                <td class="text-center">
+                                    <p style="color: red" th:text="${ErrorMsg2}" th:if="${ErrorMsg2} != null"></p>
                                 </td>
                             </tr>
                             <tr>
@@ -86,7 +96,10 @@
                                 <td class="text-center">性别</td>
                                 <td class="text-center">
                                     <label>
-                                        <input type="text" name="sex" class="form-control" placeholder="" required>
+                                        <select name="sex" class="form-control">
+                                            <option th:value="男" th:text="男"></option>
+                                            <option th:value="女" th:text="女"></option>
+                                        </select>
                                     </label>
                                 </td>
                             </tr>

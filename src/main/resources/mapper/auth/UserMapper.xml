@@ -6,6 +6,10 @@
         select * from user where username = #{username}
     </select>
 
+    <select id="findLargestId" resultType="Long">
+        select max(id) as largetId from user
+    </select>
+
     <delete id="deleteByUsername">
         delete from user where username = #{username}
     </delete>
@@ -13,5 +17,9 @@
     <update id="update">
         update user set username=#{username}, password=#{password}, role=#{Role} where id=#{id}
     </update>
+
+    <insert id="create" keyProperty="id">
+        insert into user(id,username,password,role) values (#{id},#{username},#{password},#{Role})
+    </insert>
 
 </mapper>

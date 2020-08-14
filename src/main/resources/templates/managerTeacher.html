@@ -47,6 +47,7 @@
                         <label>
                             <select name="selectCollege" >
                                 <option th:text="${selectedCollege}">all</option>
+                                <option th:text="全部学院" th:value="全部学院">all</option>
                                 <option th:each="college : ${collegeList}"
                                         th:text="${college}"
                                         th:value="${college}">
@@ -83,7 +84,7 @@
                                     <a type="button" class="btn btn-warning" href="managerDeleteTeacher.html" th:href="@{/managerHome/managerDeleteTeacher(id=${teacher.getId()})}">删除</a>
                                 </td>
                                 <td class="text-center">
-                                    <a type="button" class="btn btn-success" th:href="@{/managerHome/managerChangePassword(id=${teacher.getId()})}">重置密码</a>
+                                    <a type="button" class="btn btn-success" th:href="@{/managerHome/managerChangeTeacherPassword(id=${teacher.getId()})}">重置密码</a>
                                 </td>
                             </tr>
                             </tbody>

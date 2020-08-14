@@ -73,12 +73,15 @@
                             </td>
                         </tr>
                         <tr>
-                            <td class="text-center">授课教师</td>
+                            <td class="text-center">授课教师工号</td>
                             <td class="text-center" th:text="${course.getTeacherId()}">郭雨心</td>
                             <td class="text-center">
                                 <label>
                                     <input type="text" name="teacherId" class="form-control" placeholder="" required th:value="${course.getTeacherId()}">
                                 </label>
+                            </td>
+                            <td class="text-center">
+                                <p style="color: red" th:text="${ErrorMsg1}" th:if="${ErrorMsg1} != null"></p>
                             </td>
                         </tr>
                         </tbody>

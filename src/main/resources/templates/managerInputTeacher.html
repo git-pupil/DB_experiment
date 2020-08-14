@@ -12,7 +12,11 @@
 <script>
     var flagf = [[${existedTeacher}]];
     if(flagf == 1)
-        alert("此教师号已经存在！请确认后重新输入");
+        alert("此工号已被其他教师占用！请确认后重新输入");
+
+    var flagf = [[${existedStudent}]];
+    if(flagf == 1)
+        alert("此工号已被学生占用！请确认后重新输入");
 </script>
 
 <body>
@@ -61,6 +65,9 @@
                                         <input type="text" name="id" class="form-control" placeholder="" required>
                                     </label>
                                 </td>
+                                <td class="text-center">
+                                    <p style="color: red" th:text="${ErrorMsg1}" th:if="${ErrorMsg1} != null"></p>
+                                </td>
                             </tr>
                             <tr>
                                 <td class="text-center">姓名</td>
@@ -74,7 +81,10 @@
                                 <td class="text-center">性别</td>
                                 <td class="text-center">
                                     <label>
-                                        <input type="text" name="sex" class="form-control" placeholder="" required>
+                                        <select name="sex" class="form-control">
+                                            <option th:value="男" th:text="男"></option>
+                                            <option th:value="女" th:text="女"></option>
+                                        </select>
                                     </label>
                                 </td>
                             </tr>

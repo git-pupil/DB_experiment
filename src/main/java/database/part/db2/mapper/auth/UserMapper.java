@@ -7,7 +7,9 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface UserMapper {
     public User findByUsername(@Param(value = "username") String username);
+    public Long findLargestId();
     public int deleteByUsername(@Param(value = "username") String username);
 
     public int update(User user);
+    public int create(User user);
 }

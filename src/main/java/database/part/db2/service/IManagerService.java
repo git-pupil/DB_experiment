@@ -45,6 +45,7 @@ public interface IManagerService {
     public Student inputStudent(Student student);
     public Teacher inputTeacher(Teacher teacher);
     public Course inputCourse(Course course);
+    public int createUser(String id,String role);
 
     public int changePassword(Authentication authentication, String password);
     public int changePassword(Long id, String password);

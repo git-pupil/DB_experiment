@@ -33,6 +33,9 @@
                 <li ><a href="logout" th:href="@{/logout}">
                     <span class="glyphicon glyphicon-log-out"></span>
                     退出登录</a></li>
+                <li ><a href="userChangePassword.html" th:href="@{/managerHome/changePassword}">
+                    <span class="glyphicon glyphicon-log-out"></span>
+                    修改密码</a></li>
             </ul>
         </div>
     </div>
@@ -52,6 +55,10 @@
                         <tr>
                             <td class="text-center">工号:</td>
                             <td class="text-center" th:text="${manager.getId()}">123</td>
+                        </tr>
+                        <tr>
+                            <td class="text-center">姓名:</td>
+                            <td class="text-center" th:text="${manager.getName()}"></td>
                         </tr>
                         </tbody>
                     </table>

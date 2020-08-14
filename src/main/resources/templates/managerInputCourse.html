@@ -16,7 +16,7 @@
 
     var flagf = [[${existedTeacher}]];
     if(flagf == 0)
-        alert("此教师不存在！请确认后重新输入");
+        alert("此教师工号不存在！请确认后重新输入");
 </script>
 
 <body>
@@ -65,6 +65,9 @@
                                         <input type="text" name="id" class="form-control" placeholder="" required>
                                     </label>
                                 </td>
+                                <td class="text-center">
+                                    <p style="color: red" th:text="${ErrorMsg1}" th:if="${ErrorMsg1} != null"></p>
+                                </td>
                             </tr>
                             <tr>
                                 <td class="text-center">课程名</td>
@@ -75,11 +78,14 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td class="text-center">授课教师号</td>
+                                <td class="text-center">授课教师工号</td>
                                 <td class="text-center">
                                     <label>
                                         <input type="text" name="teacherId" class="form-control" placeholder="" required>
                                     </label>
+                                </td>
+                                <td class="text-center">
+                                    <p style="color: red" th:text="${ErrorMsg2}" th:if="${ErrorMsg2} != null"></p>
                                 </td>
                             </tr>
                             </tbody>

@@ -89,6 +89,9 @@
                                         <input type="text" name="classId" class="form-control" placeholder="" required th:value="${student.getClassId()}">
                                     </label>
                                 </td>
+                                <td class="text-center">
+                                    <p style="color: red" th:text="${ErrorMsg1}" th:if="${ErrorMsg1} != null"></p>
+                                </td>
                             </tr>
                             <tr>
                                 <td class="text-center">姓名</td>
@@ -104,7 +107,11 @@
                                 <td class="text-center" th:text="${student.getSex()}"></td>
                                 <td class="text-center">
                                     <label>
-                                        <input type="text" name="sex" class="form-control" placeholder="" required th:value="${student.getSex()}">
+                                        <select name="sex" class="form-control">
+                                            <option th:text="${student.getSex()}"></option>
+                                            <option th:value="男" th:text="男"></option>
+                                            <option th:value="女" th:text="女"></option>
+                                        </select>
                                     </label>
                                 </td>
                             </tr>
