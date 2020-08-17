@@ -122,25 +122,44 @@ public class TeacherLookGradeController {
         Teacher t_info = service.getInfo(au);
         String username = t_info.getName();
         model.addAttribute("username", username);
-
-        System.out.println(courseId);
+        //System.out.println("进来添加了");
         Course course = service.findCourse(courseId);
         //当前grade表条目数 以获取新的id
         Long num = Long.valueOf(service.count());
-        System.out.println(id);
         model.addAttribute("course",course);
-        //设置grade信息
-        Grade grade = new Grade(id,courseId);
-        grade.setId(++num);
-
         List<Course> lc = service.getCourseList(au);
-        //session.setAttribute("courseList", lc);
-
+        List<StudentWithGrade> swg = service.getStudentList(courseId);
         //上传
         model.addAttribute("courseList", lc);
-        //数据库新增
-        gradeMapper.create(grade);
-
+        //设置grade信息
+        User user = userMapper.findByUsername(Long.toString(id));
+        int i;
+        if(user != null)
+        {
+            if(swg != null)
+                for (i = 0; i < swg.size() && id != swg.get(i).getId(); i++)
+            if(i < swg.size())
+            {
+                //System.out.println("这个用户已经在课程列表中");
+                model.addAttribute("addfailure", 1);
+                return "teacherAddStudent";
+            }
+            else
+            {
+                //System.out.println("查询到了用户可以添加");
+                Grade grade = new Grade(id, courseId);
+                grade.setId(++num);
+                //数据库新增
+                gradeMapper.create(grade);
+                return "teacherCourse";
+            }
+        }
+        else
+        {
+            //System.out.println("没有这个用户");
+            model.addAttribute("addfailure", 1);
+            return "teacherAddStudent";
+        }
         return "teacherCourse";
     }
 
