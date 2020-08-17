@@ -8,17 +8,18 @@
     <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
     <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script>
+        var flagf = [[${addfailure}]];
         function add()
         {
-            alert("添加学生成功！");
+            if(flagf == 1)
+                alert("该学生已加入课程或不是该本学校学生");
+            else
+                alert("添加学生成功！");
         }
     </script>
 </head>
-<script>
-    var flagf = [[${addfailure}]];
-    if(flagf == 1)
-        alert("该学生已加入课程或不是该本学校学生");
-</script>
+
+
 <body>
 <nav class="navbar navbar-default" role="navigation" style="background-color: #ffd9d9">
     <div class="container-fluid">

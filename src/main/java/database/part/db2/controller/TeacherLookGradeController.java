@@ -133,34 +133,36 @@ public class TeacherLookGradeController {
         model.addAttribute("courseList", lc);
         //设置grade信息
         User user = userMapper.findByUsername(Long.toString(id));
-        int i;
+        int i = 0;
         if(user != null)
         {
             if(swg != null)
-                for (i = 0; i < swg.size() && id != swg.get(i).getId(); i++)
+                for (i = 0; i < swg.size() && (id.longValue() != swg.get(i).getId().longValue()); i++);
+             System.out.println(swg.size());
+            System.out.println(i);
             if(i < swg.size())
             {
-                //System.out.println("这个用户已经在课程列表中");
+                System.out.println("这个用户已经在课程列表中");
                 model.addAttribute("addfailure", 1);
-                return "teacherAddStudent";
+                return "teacherCourse";
             }
             else
             {
-                //System.out.println("查询到了用户可以添加");
+                System.out.println("查询到了用户可以添加");
                 Grade grade = new Grade(id, courseId);
                 grade.setId(++num);
                 //数据库新增
                 gradeMapper.create(grade);
+                model.addAttribute("addfailure", 0);
                 return "teacherCourse";
             }
         }
         else
         {
-            //System.out.println("没有这个用户");
+            System.out.println("没有这个用户");
             model.addAttribute("addfailure", 1);
             return "teacherAddStudent";
         }
-        return "teacherCourse";
     }
 
     /**
