@@ -120,26 +120,29 @@ public class TeacherLookGradeController {
         //获取权限
         Authentication au = SecurityContextHolder.getContext().getAuthentication();
         Teacher t_info = service.getInfo(au);
+        //上传用户名
         String username = t_info.getName();
         model.addAttribute("username", username);
-        //System.out.println("进来添加了");
+            //System.out.println("进来添加了");
         Course course = service.findCourse(courseId);
         //当前grade表条目数 以获取新的id
         Long num = Long.valueOf(service.count());
         model.addAttribute("course",course);
         List<Course> lc = service.getCourseList(au);
+        //获取当前course中所有学生信息
         List<StudentWithGrade> swg = service.getStudentList(courseId);
         //上传
         model.addAttribute("courseList", lc);
-        //设置grade信息
+        //查看该学号是否在数据库中
         User user = userMapper.findByUsername(Long.toString(id));
         int i = 0;
         if(user != null)
         {
+            //遍历该课程的所有学生学号，看是否已经存在
             if(swg != null)
                 for (i = 0; i < swg.size() && (id.longValue() != swg.get(i).getId().longValue()); i++);
-             System.out.println(swg.size());
-            System.out.println(i);
+                //System.out.println(swg.size());
+                //System.out.println(i);
             if(i < swg.size())
             {
                 System.out.println("这个用户已经在课程列表中");
@@ -149,6 +152,7 @@ public class TeacherLookGradeController {
             else
             {
                 System.out.println("查询到了用户可以添加");
+                //设置grade信息
                 Grade grade = new Grade(id, courseId);
                 grade.setId(++num);
                 //数据库新增
@@ -200,7 +204,7 @@ public class TeacherLookGradeController {
      * @param model
      * @param studentId
      * @param courseId
-     * @param newPoint
+     * @param newPoint(表单数据)
      * @return teacherChangeGrade
      */
 
@@ -271,8 +275,8 @@ public class TeacherLookGradeController {
      * 录入成绩
      * @param model
      * @param courseId
-     * @param ids
-     * @param points
+     * @param ids(表单数据hidden 默认上传的学生id)
+     * @param points(成绩)
      * @return teacherInputGrade
      */
     @RequestMapping("/teacherInputGrade")
@@ -309,38 +313,57 @@ public class TeacherLookGradeController {
 
     }
 
-    @RequestMapping("/changePassword")
-    String changePsw(Model model) {
-        return "userChangePassword";
+    /**
+     * 修改密码跳转页面
+     * @return
+     */
 
+    @RequestMapping("/changePassword")
+    String changePsw() {
+        return "userChangePassword";
     }
 
+    /**
+     * 用户修改密码
+     * @param model
+     * @param password(原密码)
+     * @param psw1(新密码1)
+     * @param psw2(新密码2)
+     * @return 修改失败：userChangePassword 修改成功 ：logout
+     */
     @RequestMapping("/userChangePassword")
     String changePassword(Model model, @RequestParam(value = "password") String password, @RequestParam(value = "password1") String psw1, @RequestParam(value = "password2") String psw2) {
+        //获取权限
         Authentication au = SecurityContextHolder.getContext().getAuthentication();
         String usn = au.getName();
+        //查找当前用户信息
         User user = userMapper.findByUsername(usn);
-        System.out.println(user.getPassword());
-        System.out.println(password);
+        //System.out.println(user.getPassword());
+        //System.out.println(password);
+        //原始密码正确
         if(user.getPassword().equals(password))
         {
-            System.out.println(1);
+            //System.out.println(1);
+            //新密码为空
             if(psw1 == null || psw2 == null)
             {
                 model.addAttribute("ErrorMsg2","请输入新密码");
                 return "userChangePassword";
             }
+            //换密码成功
             else if(psw1.equals(psw2))
             {
                 user.setPassword(psw1);
                 userMapper.update(user);
                 return "redirect:/logout";
             }
+            //两次密码不一致
             else {
                 model.addAttribute("ErrorMsg3", "两次密码输入不一致");
                 return "userChangePassword";
                 }
         }
+        //原始密码输入错误
         else
             {
             model.addAttribute("ErrorMsg1", "原始密码错误，请重新输入");

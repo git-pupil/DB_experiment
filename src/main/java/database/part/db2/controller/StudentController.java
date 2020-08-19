@@ -34,10 +34,10 @@ public class StudentController {
     String studentHome(Model model, HttpServletRequest request) {
         //获取权限
         Authentication au_2 = SecurityContextHolder.getContext().getAuthentication();
+        //获取个人信息
         StudentInfo s_info = service.getStuInfo(au_2);
         //查找用户名
         String username = s_info.getName();
-        //获取个人信息
         request.getSession().setAttribute("student", s_info);
         //上传个人信息
         model.addAttribute("username", username);
